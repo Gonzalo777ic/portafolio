@@ -4,35 +4,25 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+import { ParticleBackground } from "@/components/particle-background"
+import { EarthGlow } from "@/components/earth-glow"
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
+import { ThemeProvider } from "@/components/theme-provider"
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+})
 
 export const metadata: Metadata = {
   title: "Developer Portfolio",
-  description: "Modern developer portfolio showcasing projects and skills",
-  generator: "v0.app",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
+  description: "Modern developer portfolio",
 }
 
 export default function RootLayout({
@@ -42,9 +32,32 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`font-sans antialiased dark`}>
-        {children}
-        <Analytics />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-black text-foreground overflow-x-hidden`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* === CAPA 0: FONDO DE ESTRELLAS === */}
+          <ParticleBackground />
+          
+          {/* === CAPA 10: CURVATURA DE LA TIERRA === */}
+          <EarthGlow />
+
+          {/* === CAPA 20: CONTENIDO INTERACTIVO === */}
+          <div className="relative z-20 flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )
