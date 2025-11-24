@@ -1,195 +1,194 @@
-"use client"
+"use client";
 
-import type React from "react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Navbar } from "@/components/navbar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Mail,
+  Github,
+  Linkedin,
+  Twitter,
+  Check,
+  ArrowUpRight,
+} from "lucide-react";
+import { CtaSection } from "@/components/cta-section";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Mail, Github, Linkedin, Twitter } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+// Configura aquí tus enlaces reales
+const MY_EMAIL = "gonzaloisique777@gmail.com";
+const WEBSITE_URL = "https://tu-portfolio.com"; // Pon aquí tu URL real
 
 const socialLinks = [
   {
-    icon: Mail,
-    label: "Email",
-    href: "mailto:hello@example.com",
-    value: "hello@example.com",
-  },
-  {
     icon: Github,
     label: "GitHub",
-    href: "https://github.com",
-    value: "@username",
+    href: "https://github.com/tuusuario", // Actualiza con tu link
+    handle: "@tuusuario",
   },
   {
     icon: Linkedin,
     label: "LinkedIn",
-    href: "https://linkedin.com",
-    value: "Your Name",
+    href: "https://linkedin.com/in/tuusuario", // Actualiza con tu link
+    handle: "@tuusuario",
   },
   {
     icon: Twitter,
-    label: "Twitter",
-    href: "https://twitter.com",
-    value: "@username",
+    label: "X (Twitter)",
+    href: "https://twitter.com/tuusuario", // Actualiza con tu link
+    handle: "@tuusuario",
   },
-]
+  {
+    icon: Mail,
+    label: "Email",
+    href: `mailto:${MY_EMAIL}`,
+    handle: MY_EMAIL,
+  },
+];
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
+  const { toast } = useToast();
+  const [isCopied, setIsCopied] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(WEBSITE_URL);
+    setIsCopied(true);
+    toast({
+      title: "¡Enlace copiado!",
+      description: "El link del website se ha copiado al portapapeles.",
+    });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setFormData({ name: "", email: "", message: "" })
-      toast({
-        title: "Success!",
-        description: "Your message has been sent. I'll get back to you soon!",
-      })
-    }, 1500)
-  }
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen">
-        {/* Hero Section */}
-        <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
-          <motion.div
-            className="space-y-6 mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className="text-primary font-semibold tracking-widest uppercase text-sm">Get in Touch</p>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground">Let's Work Together</h1>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Have a project in mind? Let's talk about it. Fill out the form below and I'll get back to you as soon as
-              possible.
-            </p>
-          </motion.div>
+    <div className="min-h-screen relative text-foreground">
+      {/* --- 1. FONDO FIJO --- */}
+      <div
+        className="fixed inset-0 z-0 bg-black"
+        style={{
+          backgroundImage: `url('/static/bw.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        {/* Overlay para oscurecer la imagen y dar contraste */}
+        <div className="absolute inset-0 bg-black/90"></div>
+      </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Contact Form */}
-            <motion.div
-              className="lg:col-span-2"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Send me a message</CardTitle>
-                  <CardDescription>I usually respond within 24 hours</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-sm font-medium text-foreground">
-                        Name
-                      </label>
-                      <Input
-                        id="name"
-                        name="name"
-                        placeholder="Your name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="bg-background"
-                      />
-                    </div>
+      {/* --- 2. NAVBAR (z-index alto para estar encima de todo) --- */}
+      <div className="relative z-50">
+        <Navbar />
+      </div>
 
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium text-foreground">
-                        Email
-                      </label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="your@email.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="bg-background"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label htmlFor="message" className="text-sm font-medium text-foreground">
-                        Message
-                      </label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder="Tell me about your project..."
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        className="min-h-32 bg-background"
-                      />
-                    </div>
-
-                    <Button type="submit" disabled={isSubmitting} className="w-full">
-                      {isSubmitting ? "Sending..." : "Send Message"}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Contact Info */}
-            <motion.div
-              className="space-y-4"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              {socialLinks.map((social) => {
-                const Icon = social.icon
-                return (
-                  <a key={social.label} href={social.href} className="block">
-                    <Card className="h-full hover:border-primary/50 transition-all cursor-pointer">
-                      <CardContent className="pt-6">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Icon className="h-5 w-5 text-primary" />
-                          <span className="font-medium text-foreground text-sm">{social.label}</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{social.value}</p>
-                      </CardContent>
-                    </Card>
-                  </a>
-                )
-              })}
-            </motion.div>
+      {/* --- 3. CONTENIDO PRINCIPAL (z-index medio para estar sobre el fondo) --- */}
+      <main className="relative z-10 min-h-screen flex flex-col items-center justify-center py-20 px-4 sm:px-6">
+        {/* Profile Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center text-center space-y-6 max-w-2xl w-full"
+        >
+          {/* Avatar / Profile Picture */}
+          <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl">
+            <img
+              src="/static/1.jpeg"
+              alt="Profile"
+              className="object-cover w-full h-full"
+            />
           </div>
-        </section>
+
+          {/* Name & Title */}
+          <div className="space-y-3">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+              Gonzalo Isique
+            </h1>
+
+            {/* Badges / Roles */}
+            <div className="flex flex-wrap justify-center gap-2 mt-3">
+              <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                Developer
+              </span>
+              <span className="px-3 py-1 text-xs font-medium rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                Software Engineer
+              </span>
+            </div>
+          </div>
+
+          {/* Main Actions Buttons */}
+          <div className="flex flex-row gap-4 w-full max-w-md justify-center pt-4">
+            {/* Website Button */}
+            <Button
+              onClick={handleCopyLink}
+              className="flex-1 bg-white text-black hover:bg-white/90 h-12 rounded-full transition-all font-medium"
+            >
+              Website
+              {isCopied ? (
+                <Check className="ml-2 h-4 w-4" />
+              ) : (
+                <ArrowUpRight className="ml-2 h-4 w-4" />
+              )}
+            </Button>
+
+            {/* Email Button */}
+            <a href={`mailto:${MY_EMAIL}`} className="flex-1">
+              <Button
+                variant="outline"
+                className="w-full h-12 rounded-full bg-transparent hover:bg-white/10 border-white/20 text-white"
+              >
+                <Mail className="mr-2 h-4 w-4" />
+                Email Me
+              </Button>
+            </a>
+          </div>
+
+          <p className="text-xs text-neutral-500 -mt-2 pb-6">
+            Click en "Website" para copiar el enlace.
+          </p>
+        </motion.div>
+
+        {/* Social Links Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="w-full max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4"
+        >
+          {socialLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group"
+              >
+                <Card className="flex items-center justify-between p-4 bg-neutral-900/50 border-white/10 hover:bg-white/5 hover:border-white/20 transition-all backdrop-blur-md cursor-pointer h-full">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 rounded-full bg-black border border-white/10 group-hover:border-white/30 transition-colors">
+                      <Icon className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="flex flex-col items-start">
+                      <span className="font-semibold text-sm text-white">
+                        {link.label}
+                      </span>
+                      <span className="text-xs text-neutral-400 group-hover:text-neutral-300">
+                        {link.handle}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 text-neutral-500 group-hover:text-white transition-colors" />
+                </Card>
+              </a>
+            );
+          })}
+        </motion.div>
       </main>
-    </>
-  )
+      <CtaSection />
+    </div>
+  );
 }
