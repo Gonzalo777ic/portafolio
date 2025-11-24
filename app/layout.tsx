@@ -8,6 +8,9 @@ import { ParticleBackground } from "@/components/particle-background"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
+// NUEVOS IMPORTS
+import { PlayerProvider } from "@/components/player-context"
+import { GlobalPlayer } from "@/components/global-player"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,21 +43,25 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* Fondo de partículas fijo (Global) */}
-          <ParticleBackground />
-          
-          {/* Navbar Fijo */}
-          <div className="relative z-50">
-            <Navbar />
-          </div>
+          <PlayerProvider> {/* ENVOLVEMOS TODO */}
+            
+            {/* El reproductor global vive aquí, fuera de las páginas, para no recargarse */}
+            <GlobalPlayer />
 
-          {/* Contenido */}
-          <div className="relative z-20 flex flex-col min-h-screen">
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
+            <ParticleBackground />
+            
+            <div className="relative z-50">
+              <Navbar />
+            </div>
+
+            <div className="relative z-20 flex flex-col min-h-screen">
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            
+          </PlayerProvider>
           
           <Analytics />
         </ThemeProvider>
