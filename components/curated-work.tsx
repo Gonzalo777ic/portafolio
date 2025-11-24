@@ -59,10 +59,10 @@ export function CuratedWork() {
         {/* HEADER DE LA SECCIÓN */}
         <div className="text-center mb-20">
           <span className="text-sm font-bold tracking-widest text-neutral-500 uppercase mb-2 block">
-            FEATURED CASE STUDIES
+            PROYECTOS
           </span>
           <h2 className="text-5xl md:text-7xl font-bold text-white">
-            Curated <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">work</span>
+            Algunos <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">Proyectos</span>
           </h2>
         </div>
 
