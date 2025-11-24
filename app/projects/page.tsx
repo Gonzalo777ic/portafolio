@@ -95,7 +95,6 @@ export default function Projects() {
           </motion.div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }

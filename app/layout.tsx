@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 import { ParticleBackground } from "@/components/particle-background"
-import { EarthGlow } from "@/components/earth-glow"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -41,15 +40,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* === CAPA 0: FONDO DE ESTRELLAS === */}
+          {/* Fondo de partículas fijo (Global) */}
           <ParticleBackground />
           
-          {/* === CAPA 10: CURVATURA DE LA TIERRA === */}
-          <EarthGlow />
-
-          {/* === CAPA 20: CONTENIDO INTERACTIVO === */}
-          <div className="relative z-20 flex flex-col min-h-screen">
+          {/* Navbar Fijo */}
+          <div className="relative z-50">
             <Navbar />
+          </div>
+
+          {/* Contenido */}
+          <div className="relative z-20 flex flex-col min-h-screen">
             <main className="flex-grow">
               {children}
             </main>
