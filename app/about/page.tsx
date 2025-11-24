@@ -1,188 +1,176 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { TechBadge } from "@/components/tech-badge"
-import { Code2, Palette, Zap, Users, Target, Lightbulb } from "lucide-react"
+import { motion } from "framer-motion";
+import { Navbar } from "@/components/navbar";
+import { AboutCarousel } from "@/components/about_page/about-carousel";
+import { SkillsScatter } from "@/components/about_page/skills-scatter";
 
-const skills = [
-  {
-    icon: Code2,
-    title: "Desarrollo Frontend",
-    description: "React, Next.js, TypeScript, Tailwind CSS",
-  },
-  {
-    icon: Zap,
-    title: "Backend Development",
-    description: "Node.js, APIs, Databases, Authentication",
-  },
-  {
-    icon: Palette,
-    title: "UI/UX Design",
-    description: "Figma, Component Design, User Experience",
-  },
-  {
-    icon: Users,
-    title: "Collaboration",
-    description: "Team Leadership, Code Review, Mentoring",
-  },
-  {
-    icon: Target,
-    title: "Performance",
-    description: "Optimization, Web Vitals, Scalability",
-  },
-  {
-    icon: Lightbulb,
-    title: "Problem Solving",
-    description: "Architecture, Best Practices, Innovation",
-  },
-]
-
-const techStack = [
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Tailwind CSS",
-  "Framer Motion",
-  "Node.js",
-  "Express",
-  "PostgreSQL",
-  "MongoDB",
-  "Git",
-  "Docker",
-]
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
-}
+import { Brain, Cpu, Network, Award, GraduationCap } from "lucide-react";
+import { AcademicBrainCard } from "@/components/about_page/AcademicBrainCard";
+import { CtaSection } from "@/components/cta-section";
 
 export default function About() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen">
-        {/* Hero Section */}
-        <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
-          <motion.div className="space-y-6 mb-16" variants={containerVariants} initial="hidden" animate="visible">
-            <motion.p variants={itemVariants} className="text-primary font-semibold tracking-widest uppercase text-sm">
-              About Me
-            </motion.p>
-            <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl font-bold text-foreground">
-              Full-Stack Developer & Creative Builder
-            </motion.h1>
-            <motion.p variants={itemVariants} className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
-              With over 5 years of experience in web development, I specialize in building modern, scalable applications
-              that users love. My passion lies at the intersection of code, design, and user experience.
-            </motion.p>
-          </motion.div>
+    <div className="bg-black min-h-screen text-foreground">
+      <div className="relative z-50">
+        <Navbar />
+      </div>
 
-          {/* Bio Section */}
-          <motion.div
-            className="mb-16 space-y-4 text-muted-foreground leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <p>
-              I started my journey in web development during college when I built my first website. Since then, I've had
-              the opportunity to work on projects ranging from startups to enterprise applications, learning something
-              new along the way.
-            </p>
-            <p>
-              When I'm not coding, you can find me contributing to open-source projects, writing technical blogs, or
-              exploring new technologies. I believe in continuous learning and staying updated with the latest industry
-              trends.
-            </p>
-          </motion.div>
-        </section>
+      <main className="pt-32 pb-20 px-4">
+        <div className="max-w-7xl mx-auto space-y-32">
+          {/* 1. INTRODUCCIÓN & BIO (Carrusel a la Derecha) */}
+          <section className="flex flex-col lg:flex-row gap-12 items-start">
+            {/* LADO IZQUIERDO: TEXTO DETALLADO */}
+            <div className="lg:w-1/2 space-y-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="space-y-6"
+              >
+                <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+                  Ingeniero de Software <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+                    en formación constante.
+                  </span>
+                </h1>
 
-        {/* Skills Section */}
-        <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-32 border-t border-border">
-          <motion.div
-            className="mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-2">Core Competencies</h2>
-            <p className="text-muted-foreground">What I bring to every project</p>
-          </motion.div>
+                {/* --- BIOGRAFÍA DETALLADA Y TRANSCISIÓN --- */}
+                <div className="prose prose-invert prose-lg max-w-3xl text-neutral-300 leading-relaxed space-y-6">
+                  <p>
+                    Soy Gonzalo Isique y actualmente estoy cursando los{" "}
+                    <strong>
+                      últimos ciclos de la carrera de Ingeniería Informática
+                    </strong>{" "}
+                    en la Universidad Ricardo Palma. Mi enfoque se centra en la
+                    formación autodidacta y el aprendizaje continuo y reflexivo,
+                    buscando no solo dominar la arquitectura y el diseño de
+                    sistemas escalables, sino también comprender el propósito
+                    detrás de cada decisión de diseño y el establecimiento de lo
+                    que se consideran buenas prácticas y convenciones derivadas
+                    de ellas.
+                  </p>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {skills.map((skill, index) => {
-              const Icon = skill.icon
-              return (
-                <motion.div key={index} variants={itemVariants}>
-                  <Card className="h-full hover:border-primary/50 transition-all">
-                    <CardHeader>
-                      <Icon className="h-8 w-8 text-primary mb-2" />
-                      <CardTitle className="text-lg">{skill.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription>{skill.description}</CardDescription>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )
-            })}
-          </motion.div>
-        </section>
+                  <p>
+                    Mi trayectoria comenzó inicialmente en la carrera de
+                    Medicina Humana, donde cursé y aprobé asignaturas como
+                    Estadística, Demografía, Anatomía, Genética, Embriología,
+                    Telemática Médica, Investigación, entre otras. Esta etapa
+                    me brindó una base invaluable en el{" "}
+                    <strong>
+                      entendimiento y manejo de datos, tipos de variables y
+                      lógica de investigación, así como la capacidad de
+                      abstracción necesaria para analizar sistemas biológicos
+                      complejos
+                    </strong>
+                    , habilidades que hoy aplico directamente en la toma de
+                    decisiones y en el diseño de sistemas computacionales
+                    complejos.
+                  </p>
 
-        {/* Tech Stack Section */}
-        <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 sm:py-32 border-t border-border">
-          <motion.div
-            className="mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-2">Tech Stack</h2>
-            <p className="text-muted-foreground">Technologies I work with regularly</p>
-          </motion.div>
+                  <p>
+                    La transición hacia la ingeniería estuvo motivada por una
+                    atracción creciente hacia la{" "}
+                    <strong>abstracción y la construcción de sistemas</strong>,
+                    combinando el rigor lógico adquirido previamente con mi
+                    pasión por las tecnologías de sistemas computacionales.
+                  </p>
+                </div>
 
-          <motion.div
-            className="flex flex-wrap gap-3"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {techStack.map((tech) => (
-              <motion.div key={tech} variants={itemVariants}>
-                <TechBadge name={tech} />
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
+                <AcademicBrainCard />
+              </motion.div>{" "}
+            </div>
+
+            {/* LADO DERECHO: CARRUSEL DE FOTOS */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+              className="lg:w-1/2 w-full text-center"
+            >
+              <AboutCarousel />
+              <p className="text-center text-sm text-neutral-500 mt-4 italic">
+                Momentos capturados durante mi trayectoria académica y
+                profesional.
+              </p>
+            </motion.div>
+          </section>
+
+          <section className="text-center">
+            <div className="mb-10">
+              <h2 className="text-3xl font-bold text-white mb-4">
+                Mi Arsenal Técnico
+              </h2>
+              <p className="text-neutral-400">
+                Una visión holística de las tecnologías que domino, agrupadas
+                por área de impacto.
+              </p>
+            </div>
+            <SkillsScatter />
+          </section>
+
+          <section className="relative p-8 md:p-12 rounded-3xl border border-white/10 bg-neutral-900/30 backdrop-blur-sm overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/10 rounded-full blur-[100px]" />
+
+            <div className="relative z-10">
+              <h2 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                <Brain className="text-purple-400" />
+                Lo que estoy aprendiendo ahora
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Interés 1: Machine Learning */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 text-xl font-semibold text-purple-300">
+                    <Cpu size={24} />
+                    <h3>Machine Learning, AI & Data Engineering</h3>
+                  </div>
+                  <p className="text-neutral-400 leading-relaxed">
+                    Actualmente estoy profundizando en el ciclo completo de
+                    desarrollo de modelos de Machine Learning: desde la
+                    preparación de datos, feature engineering y entrenamiento
+                    con frameworks como TensorFlow y PyTorch, hasta la
+                    integración de modelos en aplicaciones reales mediante APIs
+                    o servicios escalables.
+                    <br />
+                    <br />
+                    Me interesa especialmente cómo la analítica avanzada y los
+                    modelos predictivos pueden apoyar la toma de decisiones
+                    estratégicas en una empresa. Esto incluye entender cómo
+                    automatizar flujos de datos, versionar experimentos,
+                    monitorizar modelos y garantizar su reproducibilidad dentro
+                    de pipelines de ML modernos.
+                  </p>
+                </div>
+
+                {/* Interés 2: MLOps y Sistemas Distribuidos */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 text-xl font-semibold text-blue-300">
+                    <Network className="w-6 h-6" />
+                    <h3>MLOps & Sistemas Distribuidos</h3>
+                  </div>
+                  <p className="text-neutral-400 leading-relaxed">
+                    Estoy estudiando el flujo completo de MLOps: ingestión de
+                    datos, orquestación con pipelines (Airflow, Prefect),
+                    empaquetado de modelos, CI/CD para ML, despliegue en
+                    contenedores, monitoreo de drift y observabilidad del
+                    rendimiento.
+                    <br />
+                    <br />
+                    Mi objetivo es entender cómo construir infraestructuras que
+                    permitan entrenar, escalar y desplegar modelos de forma
+                    confiable en entornos distribuidos, alineado con prácticas
+                    de empresas que operan grandes volúmenes de datos y
+                    requieren respuestas en tiempo real.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </main>
-    </>
-  )
+      <CtaSection />
+    </div>
+  );
 }

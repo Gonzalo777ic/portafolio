@@ -1,0 +1,80 @@
+import { Layout, Server, Cloud, Terminal } from "lucide-react";
+
+
+export const skillsData = {
+  Frontend: {
+    icon: <Layout className="w-5 h-5 text-cyan-400" />,
+    techs: [
+      { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+      { name: "React Native", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+      { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/ffffff" },
+      { name: "JavaScript", icon: "https://cdn.simpleicons.org/javascript/F7DF1E" },
+      { name: "TypeScript", icon: "https://cdn.simpleicons.org/typescript/3178C6" },
+      { name: "HTML5", icon: "https://cdn.simpleicons.org/html5/E34F26" },
+      { name: "CSS3", icon: "https://cdn.simpleicons.org/css3/1572B6" },
+      { name: "Tailwind CSS", icon: "https://cdn.simpleicons.org/tailwindcss/06B6D4" },
+      { name: "Zod", icon: "https://cdn.simpleicons.org/zod/3E67B1" },
+      { name: "Zustand", icon: "https://repository-images.githubusercontent.com/180328715/fca49300-e7f1-11ea-9f51-cfd949b31560" },
+      { name: "Bootstrap", icon: "https://cdn.simpleicons.org/bootstrap/7952B3" },
+      { name: "Responsive Design", icon: "https://cdn.simpleicons.org/materialdesign/ffffff" }, // Icono Material Design como referencia
+      { name: "Expo", icon: "https://cdn.simpleicons.org/expo/ffffff" },
+    ],
+  },
+  Backend: {
+    icon: <Server className="w-5 h-5 text-violet-400" />,
+    techs: [
+      { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+      { name: "Spring Boot", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
+      { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB" },
+      { name: "Django", icon: "https://cdn.simpleicons.org/django/092E20" },
+      { name: "Flask", icon: "https://cdn.simpleicons.org/flask/ffffff" },
+      { name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" },
+      { name: "MongoDB", icon: "https://cdn.simpleicons.org/mongodb/47A248" },
+      { name: "Oracle", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" },
+      { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/4479A1" },
+      { name: "SQL Server", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" },
+      { name: "Firebase", icon: "https://cdn.simpleicons.org/firebase/FFCA28" },
+      { name: "Node.js", icon: "https://cdn.simpleicons.org/nodedotjs/339933" },
+      { name: "Auth0", icon: "https://cdn.simpleicons.org/auth0/EB5424" },
+      { name: "JWT", icon: "https://cdn.simpleicons.org/jsonwebtokens/ffffff" },
+    ],
+  },
+  DevOps: {
+    icon: <Cloud className="w-5 h-5 text-emerald-400" />,
+    techs: [
+      { name: "Docker", icon: "https://cdn.simpleicons.org/docker/2496ED" },
+      { name: "Kubernetes", icon: "https://cdn.simpleicons.org/kubernetes/326CE5" },
+      { name: "GCP", icon: "https://cdn.simpleicons.org/googlecloud/4285F4" },
+      { name: "GitHub Actions", icon: "https://cdn.simpleicons.org/githubactions/2088FF" },
+      { name: "CI/CD", icon: "https://cdn.simpleicons.org/gitlab/FCA121" }, // GitLab como símbolo de CI/CD
+    ],
+  },
+  Other: {
+    icon: <Terminal className="w-5 h-5 text-orange-400" />,
+    techs: [
+        
+      { name: "Git", icon: "https://cdn.simpleicons.org/git/F05032" },
+      { name: "Agile/Scrum", icon: "https://cdn.simpleicons.org/jira/0052CC" },
+      { name: "RUP", icon: "https://cdn.simpleicons.org/uml/008000" }, 
+      { name: "Diagramas UML", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/UML_logo.svg" },
+      { name: "Linux", icon: "https://cdn.simpleicons.org/linux/FCC624" },
+            { name: "Postman", icon: "https://cdn.simpleicons.org/postman/FF6C37" }, // Postman oficial
+
+      { name: "DSA", icon: "https://cdn.simpleicons.org/leetcode/FFA116" }, // LeetCode como referencia a Algoritmos
+      { name: "Critical Thinking", icon: "https://cdn.simpleicons.org/openai/ffffff" }, // Icono abstracto (Inteligencia)
+      { name: "Problem Solving", icon: "https://cdn.simpleicons.org/hackerrank/2EC866" }, // HackerRank como referencia
+      { name: "Excel", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Microsoft_Office_Excel_%282019%E2%80%932025%29.svg/826px-Microsoft_Office_Excel_%282019%E2%80%932025%29.svg.png" },
+      { name: "Power BI", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/New_Power_BI_Logo.svg/2048px-New_Power_BI_Logo.svg.png" }, // Power BI oficial
+      { name: "Machine Learning", icon: "https://cdn.simpleicons.org/tensorflow/FF6F00" },
+      { name: "Jest", icon: "https://cdn.simpleicons.org/jest/C21325" },
+      { name: "Ngrok", icon: "https://cdn.simpleicons.org/ngrok/ffffff" },
+      { name: "System Design", icon: "https://cdn.simpleicons.org/blueprint/ffffff" }, // Blueprint icon
+      { name: "TOGAF", icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCuj8qdhIcMomeAgAi8QOpNvHvWztj5SLAtA&s" },
+      { name: "Bizagi", icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRripaurgH1sQd_zTqPRPDuLmAUN9m8UB-wyw&s" },
+      { name: "PlantUML", icon: "https://cdn.hashnode.com/res/hashnode/image/upload/v1609283590230/mqeCBmvO_.png" },
+      { name: "Monolithic", icon: "https://cdn.simpleicons.org/microstrategy/ffffff" }, 
+      { name: "Microservices", icon: "https://cdn.simpleicons.org/openstack/ffffff" }, 
+      { name: "Layered Arch.", icon: "https://cdn.simpleicons.org/codesandbox/ffffff" },
+    ],
+  },
+};

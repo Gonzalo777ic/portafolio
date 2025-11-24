@@ -115,7 +115,6 @@ export default function Home() {
       <ServicesSection />
 
       {/* SECCIÓN SKILLS */}
-      {/* Si HomeSkills tiene elementos que salen de la pantalla, pon overflow-hidden en SU componente wrapper, no en main */}
       <div className="w-full overflow-hidden">
         <HomeSkills />
       </div>
