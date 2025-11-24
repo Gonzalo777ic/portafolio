@@ -11,7 +11,7 @@ import { CuratedWork } from "@/components/curated-work";
 import { ServicesSection } from "@/components/services-section";
 import { ValuesMarquee } from "@/components/values-marquee";
 import { PersonalFavorites } from "@/components/personal-favorites";
-
+import { CtaSection } from "@/components/cta-section";
 // Variantes de animación (sin cambios)
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -56,7 +56,7 @@ export default function Home() {
               variants={itemVariants}
               className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.1]"
             >
-              Desarrollo full stack
+              Desarrollo full stack{" "}
               <br className="hidden md:block" />
               escalable y sostenible{" "}
               <span className="font-serif italic font-light text-white/90">
@@ -123,6 +123,7 @@ export default function Home() {
       <CuratedWork />
       <ValuesMarquee />
       <PersonalFavorites/>
+      <CtaSection/>
 
       
     </main>

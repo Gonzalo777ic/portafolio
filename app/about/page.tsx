@@ -10,7 +10,7 @@ import { Code2, Palette, Zap, Users, Target, Lightbulb } from "lucide-react"
 const skills = [
   {
     icon: Code2,
-    title: "Frontend Development",
+    title: "Desarrollo Frontend",
     description: "React, Next.js, TypeScript, Tailwind CSS",
   },
   {

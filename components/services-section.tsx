@@ -5,17 +5,17 @@ import { Code, Server, PenTool, Smartphone } from "lucide-react"
 
 const services = [
   {
-    title: "Frontend Development",
+    title: "Desarrollo Frontend",
     description: "Construyo interfaces web y móviles modernas, rápidas y accesibles. Transformo diseños complejos en código pixel-perfect usando React, Next.js y Tailwind.",
     icon: <Code className="w-8 h-8 text-cyan-400" />,
   },
   {
-    title: "Backend Development",
+    title: "Desarrollo Backend",
     description: "Diseño arquitecturas de servidor robustas y escalables. Creo APIs seguras, gestiono bases de datos complejas y optimizo el rendimiento del lado del servidor.",
     icon: <Server className="w-8 h-8 text-violet-400" />,
   },
   {
-    title: "Web & UI Design",
+    title: "Diseño Web & UI",
     description: "Diseño experiencias de usuario intuitivas y sistemas visuales atractivos. Me enfoco en la usabilidad y la estética para asegurar que el producto destaque.",
     icon: <PenTool className="w-8 h-8 text-pink-400" />,
   },

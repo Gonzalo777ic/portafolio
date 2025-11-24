@@ -6,11 +6,18 @@ import { usePlayer } from "./player-context"
 import { useState } from "react"
 
 export function GlobalPlayer() {
-  const { isOpen, setIsOpen } = usePlayer()
+  const { isOpen, setIsOpen, currentUrl } = usePlayer()
   const [isMinimized, setIsMinimized] = useState(false)
 
-  // URL del álbum para abrir en la app nativa
-  const spotifyUrl = "https://open.spotify.com/album/2jQaXpmaoRQDQLViaR41AR"
+  // Si no hay URL seleccionada, usamos un default o no renderizamos el iframe
+  const activeUrl = currentUrl || "https://open.spotify.com/embed/album/2jQaXpmaoRQDQLViaR41AR"
+
+  // Función para convertir link normal a embed si es necesario (simple replace)
+  // De: https://open.spotify.com/album/ID
+  // A:  https://open.spotify.com/embed/album/ID
+  const embedUrl = activeUrl.includes("embed") 
+    ? activeUrl 
+    : activeUrl.replace("open.spotify.com", "open.spotify.com/embed")
 
   return (
     <AnimatePresence>
@@ -27,7 +34,7 @@ export function GlobalPlayer() {
             }
           `}
         >
-          {/* --- VISTA MINIMIZADA --- */}
+          {/* VISTA MINIMIZADA */}
           <div 
             onClick={() => setIsMinimized(false)}
             className={`absolute inset-0 w-full h-full bg-[#1DB954] flex items-center justify-center hover:scale-110 transition-transform z-20 cursor-pointer
@@ -37,18 +44,18 @@ export function GlobalPlayer() {
             <Music className="text-black w-8 h-8 animate-pulse" />
           </div>
 
-          {/* --- VISTA COMPLETA --- */}
+          {/* VISTA COMPLETA */}
           <div 
             className={`relative w-full h-full bg-neutral-900 transition-opacity duration-300 z-10 flex flex-col
               ${isMinimized ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}
             `}
           >
             
-            {/* Barra superior de controles */}
+            {/* Controles */}
             <div className="absolute top-3 right-3 z-50 flex gap-2">
-              {/* Botón EXTRA: Abrir en Spotify (Útil para móviles) */}
-              <a 
-                href={spotifyUrl}
+               {/* Botón Abrir en App (Extraemos el ID para link directo si queremos, o usamos la misma url base) */}
+               <a 
+                href={activeUrl.replace("/embed", "")} // Quitamos /embed para link externo
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-green-500/90 backdrop-blur-md rounded-full text-black hover:bg-green-400 transition-all border border-transparent shadow-lg"
@@ -60,23 +67,22 @@ export function GlobalPlayer() {
               <button 
                 onClick={() => setIsMinimized(true)}
                 className="p-2 bg-black/60 backdrop-blur-md rounded-full text-white/70 hover:text-white hover:bg-black/80 transition-all border border-white/10"
-                title="Minimizar"
               >
                 <Minimize2 size={16} />
               </button>
               <button 
                 onClick={() => setIsOpen(false)}
                 className="p-2 bg-black/60 backdrop-blur-md rounded-full text-white/70 hover:text-red-400 hover:bg-black/80 transition-all border border-white/10"
-                title="Cerrar"
               >
                 <X size={16} />
               </button>
             </div>
 
-            {/* Iframe */}
+            {/* Iframe Dinámico */}
             <iframe 
+              key={embedUrl} // La key fuerza recarga si cambia la URL
               style={{ borderRadius: "12px", backgroundColor: "#121212" }} 
-              src="https://open.spotify.com/embed/album/2jQaXpmaoRQDQLViaR41AR?utm_source=generator&theme=0" 
+              src={`${embedUrl}?utm_source=generator&theme=0`}
               width="100%" 
               height="100%" 
               frameBorder="0" 
