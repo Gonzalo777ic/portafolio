@@ -3,10 +3,8 @@ import React from "react";
 
 export function EarthGlow() {
   return (
-    // CAMBIO: 'absolute' para que se mueva con el scroll del contenedor padre
     <div className="absolute bottom-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
 
-      {/* 1. GLOW PÚRPURA */}
       <div
         className="
           absolute 
@@ -29,7 +27,6 @@ export function EarthGlow() {
         }}
       />
 
-      {/* 2. CURVATURA */}
       <div
         className="
           absolute 

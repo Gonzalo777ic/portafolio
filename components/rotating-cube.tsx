@@ -5,15 +5,13 @@ import { motion, useMotionValue, PanInfo, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { X, ZoomIn } from "lucide-react"
 
-// Tus imágenes
 const images = [
-  "/static/1.jpeg", // Front
-  "/static/2.jpeg", // Front
-  "/static/3.jpeg", // Front
-  "/static/5.png", // Front
+  "/static/1.jpeg", 
+  "/static/2.jpeg", 
+  "/static/3.jpeg", 
+  "/static/5.png", 
 ]
 
-// Tamaño del cubo
 const CUBE_SIZE = 480
 const HALF_SIZE = CUBE_SIZE / 2
 
@@ -23,7 +21,6 @@ export function RotatingCube() {
   
   const rotateY = useMotionValue(0)
 
-  // Loop de animación
   useEffect(() => {
     let animationFrameId: number
     const animate = () => {
@@ -38,7 +35,6 @@ export function RotatingCube() {
 
   return (
     <>
-      {/* CONTENEDOR DEL CUBO (Centrado y aislado) */}
       <div className="relative w-full flex justify-center items-center py-20 perspective-1000">
         <div 
           className="relative"
@@ -50,7 +46,6 @@ export function RotatingCube() {
             className="relative w-full h-full preserve-3d"
             style={{ rotateY }}
           >
-            {/* CARAS LATERALES */}
             <CubeFace 
               img={images[0]} 
               transform={`translateZ(${HALF_SIZE}px)`} 
@@ -72,7 +67,6 @@ export function RotatingCube() {
               onClick={() => setSelectedImage(images[3])}
             />
 
-            {/* TAPAS (Superior e Inferior - Negras para cerrar el cubo) */}
             <div className="absolute inset-0 bg-neutral-900" style={{ transform: `rotateX(90deg) translateZ(${HALF_SIZE}px)` }} />
             <div className="absolute inset-0 bg-neutral-900" style={{ transform: `rotateX(-90deg) translateZ(${HALF_SIZE}px)` }} />
 
@@ -80,13 +74,11 @@ export function RotatingCube() {
         </div>
       </div>
 
-      {/* ESTILOS 3D GLOBALES PARA ESTE COMPONENTE */}
       <style jsx global>{`
         .perspective-1000 { perspective: 1000px; }
         .preserve-3d { transform-style: preserve-3d; }
       `}</style>
 
-      {/* MODAL */}
       <ImageModal 
         src={selectedImage} 
         onClose={() => setSelectedImage(null)} 
@@ -95,13 +87,9 @@ export function RotatingCube() {
   )
 }
 
-// --- CARA DEL CUBO ---
 function CubeFace({ img, transform, onClick }: { img: string, transform: string, onClick: () => void }) {
   return (
     <div 
-      // CAMBIOS AQUI: 
-      // 1. Quitamos 'border-2' para que la imagen llegue al borde.
-      // 2. Cambiamos 'rounded-xl' a 'rounded-lg' para esquinas menos agresivas.
       className="absolute inset-0 w-full h-full bg-neutral-900 rounded-lg overflow-hidden shadow-2xl backface-visible cursor-pointer group"
       style={{ transform }}
       onClick={onClick}
@@ -114,7 +102,6 @@ function CubeFace({ img, transform, onClick }: { img: string, transform: string,
           className="object-cover transition-transform duration-500 group-hover:scale-110" 
           sizes="(max-width: 768px) 300px, 400px"
         />
-        {/* Overlay Hover */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
           <ZoomIn className="text-white w-10 h-10 drop-shadow-lg" />
         </div>
@@ -123,7 +110,6 @@ function CubeFace({ img, transform, onClick }: { img: string, transform: string,
   )
 }
 
-// --- MODAL ---
 function ImageModal({ src, onClose }: { src: string | null, onClose: () => void }) {
   return (
     <AnimatePresence>

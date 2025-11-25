@@ -21,7 +21,6 @@ export function PersonalFavorites() {
           </h2>
         </div>
 
-        {/* GRID DE 3 COLUMNAS - SOLO ÁLBUMES */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* ÁLBUM: Chick Corea - Light Years */}
           <SpotifyCustomCard
@@ -52,7 +51,6 @@ export function PersonalFavorites() {
   );
 }
 
-// --- TARJETA DE SPOTIFY ---
 function SpotifyCustomCard({
   albumUrl,
   imageUrl,
@@ -71,7 +69,7 @@ function SpotifyCustomCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      onClick={() => playAlbum(albumUrl)} // <--- USAMOS LA NUEVA FUNCIÓN
+      onClick={() => playAlbum(albumUrl)} 
       className="group relative p-8 rounded-3xl bg-black border border-white/10 hover:border-white/20 transition-all h-[350px] flex flex-col items-center justify-center text-center overflow-hidden cursor-pointer shadow-2xl"
     >
       {/* Imagen del Álbum */}

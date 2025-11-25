@@ -9,12 +9,8 @@ export function GlobalPlayer() {
   const { isOpen, setIsOpen, currentUrl } = usePlayer()
   const [isMinimized, setIsMinimized] = useState(false)
 
-  // Si no hay URL seleccionada, usamos un default o no renderizamos el iframe
   const activeUrl = currentUrl || "https://open.spotify.com/embed/album/2jQaXpmaoRQDQLViaR41AR"
 
-  // Función para convertir link normal a embed si es necesario (simple replace)
-  // De: https://open.spotify.com/album/ID
-  // A:  https://open.spotify.com/embed/album/ID
   const embedUrl = activeUrl.includes("embed") 
     ? activeUrl 
     : activeUrl.replace("open.spotify.com", "open.spotify.com/embed")
@@ -34,7 +30,6 @@ export function GlobalPlayer() {
             }
           `}
         >
-          {/* VISTA MINIMIZADA */}
           <div 
             onClick={() => setIsMinimized(false)}
             className={`absolute inset-0 w-full h-full bg-[#1DB954] flex items-center justify-center hover:scale-110 transition-transform z-20 cursor-pointer
@@ -44,18 +39,15 @@ export function GlobalPlayer() {
             <Music className="text-black w-8 h-8 animate-pulse" />
           </div>
 
-          {/* VISTA COMPLETA */}
           <div 
             className={`relative w-full h-full bg-neutral-900 transition-opacity duration-300 z-10 flex flex-col
               ${isMinimized ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'}
             `}
           >
             
-            {/* Controles */}
             <div className="absolute top-3 right-3 z-50 flex gap-2">
-               {/* Botón Abrir en App (Extraemos el ID para link directo si queremos, o usamos la misma url base) */}
                <a 
-                href={activeUrl.replace("/embed", "")} // Quitamos /embed para link externo
+                href={activeUrl.replace("/embed", "")} 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-green-500/90 backdrop-blur-md rounded-full text-black hover:bg-green-400 transition-all border border-transparent shadow-lg"
@@ -78,9 +70,8 @@ export function GlobalPlayer() {
               </button>
             </div>
 
-            {/* Iframe Dinámico */}
             <iframe 
-              key={embedUrl} // La key fuerza recarga si cambia la URL
+              key={embedUrl} 
               style={{ borderRadius: "12px", backgroundColor: "#121212" }} 
               src={`${embedUrl}?utm_source=generator&theme=0`}
               width="100%" 

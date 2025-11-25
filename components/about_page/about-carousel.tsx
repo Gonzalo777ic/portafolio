@@ -41,12 +41,10 @@ export function AboutCarousel() {
             className="object-cover"
             priority
           />
-          {/* Overlay sutil */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Botones de Navegación */}
       <button
         onClick={prevSlide}
         className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-all opacity-0 group-hover:opacity-100"
@@ -61,7 +59,6 @@ export function AboutCarousel() {
         <ChevronRight size={24} />
       </button>
 
-      {/* Indicadores (Puntos) */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
         {images.map((_, idx) => (
           <button

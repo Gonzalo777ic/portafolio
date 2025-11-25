@@ -5,8 +5,8 @@ import React, { createContext, useContext, useState } from "react"
 type PlayerContextType = {
   isOpen: boolean
   setIsOpen: (v: boolean) => void
-  currentUrl: string | null // Nueva variable
-  playAlbum: (url: string) => void // Nueva función
+  currentUrl: string | null 
+  playAlbum: (url: string) => void 
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined)
@@ -16,8 +16,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [currentUrl, setCurrentUrl] = useState<string | null>(null)
 
   const playAlbum = (url: string) => {
-    setCurrentUrl(url) // Guardamos la URL
-    setIsOpen(true)    // Abrimos el player
+    setCurrentUrl(url) 
+    setIsOpen(true)    
   }
 
   return (

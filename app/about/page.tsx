@@ -11,29 +11,19 @@ import { CtaSection } from "@/components/cta-section";
 
 export default function About() {
   return (
-    // CAMBIO CLAVE AQUÍ: Aplicamos la imagen de fondo y el efecto fijo.
-    // Usaremos un fondo negro sólido por defecto y luego lo cubriremos con la textura.
-    // Para lograr el efecto de la imagen adjunta, la imagen de fondo debe estar
-    // en un div fijo detrás de todo.
 <div className="bg-black min-h-screen text-foreground relative">      
-      {/* FONDO GLOBAL FIJO con la imagen bw.jpg */}
       <div 
         className="fixed inset-0 z-0 bg-black"
         style={{
-          // Usamos la propiedad `backgroundImage` de CSS
           backgroundImage: `url('/static/bw.jpg')`,
-          // Propiedades para que la imagen cubra todo y se mantenga fija al hacer scroll
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-          // Opcional: Oscurecer un poco la imagen para el contraste, usando un pseudo-elemento o un overlay en la imagen
         }}
       >
-        {/* Overlay sutil para oscurecer la imagen de fondo si es necesario y garantizar el contraste */}
         <div className="absolute inset-0 bg-black/90"></div>
       </div>
       
-      {/* El resto del contenido debe estar en una capa superior (z-index > z-0) */}
       <div className="relative z-10 bg-transparent">
         <div className="relative z-50">
           <Navbar />
@@ -41,9 +31,7 @@ export default function About() {
 
         <main className="pt-32 pb-20 px-4">
           <div className="max-w-7xl mx-auto space-y-32">
-            {/* 1. INTRODUCCIÓN & BIO (Carrusel a la Derecha) */}
             <section className="flex flex-col lg:flex-row gap-12 items-start">
-              {/* LADO IZQUIERDO: TEXTO DETALLADO */}
               <div className="lg:w-1/2 space-y-8">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -58,7 +46,6 @@ export default function About() {
                     </span>
                   </h1>
 
-                  {/* --- BIOGRAFÍA DETALLADA Y TRANSCISIÓN --- */}
                   <div className="prose prose-invert prose-lg max-w-3xl text-neutral-300 leading-relaxed space-y-6">
                     <p>
                       Soy Gonzalo Isique y actualmente estoy cursando los{" "}
@@ -104,7 +91,6 @@ export default function About() {
                 </motion.div>{" "}
               </div>
 
-              {/* LADO DERECHO: CARRUSEL DE FOTOS */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -142,7 +128,6 @@ export default function About() {
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Interés 1: Machine Learning */}
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 text-xl font-semibold text-purple-300">
                       <Cpu size={24} />
@@ -166,7 +151,6 @@ export default function About() {
                     </p>
                   </div>
 
-                  {/* Interés 2: MLOps y Sistemas Distribuidos */}
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 text-xl font-semibold text-blue-300">
                       <Network className="w-6 h-6" />

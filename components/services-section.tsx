@@ -26,7 +26,6 @@ export function ServicesSection() {
     <section className="w-full py-24 px-4 relative z-20">
       <div className="max-w-6xl mx-auto">
         
-        {/* HEADER */}
         <div className="text-center mb-16">
           <span className="text-sm font-bold tracking-widest text-neutral-500 uppercase mb-2 block">
             LO QUE HAGO
@@ -36,7 +35,6 @@ export function ServicesSection() {
           </h2>
         </div>
 
-        {/* GRID DE SERVICIOS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
@@ -57,22 +55,18 @@ function ServiceCard({ service, index }: { service: any, index: number }) {
       viewport={{ once: true }}
       className="group relative p-8 rounded-3xl border border-white/5 bg-neutral-900/50 hover:bg-neutral-900/80 transition-colors duration-300 backdrop-blur-sm"
     >
-      {/* Icono con círculo brillante */}
       <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform duration-300">
         {service.icon}
       </div>
 
-      {/* Título */}
       <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">
         {service.title}
       </h3>
 
-      {/* Descripción */}
       <p className="text-neutral-400 leading-relaxed text-sm">
         {service.description}
       </p>
 
-      {/* Borde degradado en hover (Opcional, efecto premium) */}
       <div className="absolute inset-0 rounded-3xl border border-transparent group-hover:border-white/10 transition-colors pointer-events-none" />
     </motion.div>
   )

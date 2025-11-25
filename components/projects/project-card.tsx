@@ -14,11 +14,9 @@ interface Project {
   images: string[]
 }
 
-// --- 1. MODAL DE GALERÍA (CARRUSEL MEJORADO) ---
 function ProjectModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Resetear índice cuando cambia el proyecto
   if (!project) return null
 
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % project.images.length)
@@ -36,7 +34,6 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
           onClick={onClose}
         >
-          {/* Botón Cerrar Global */}
           <button 
             onClick={onClose}
             className="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-[110]"
@@ -51,9 +48,7 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
             className="relative w-full max-w-6xl aspect-video bg-neutral-900 rounded-xl overflow-hidden shadow-2xl border border-white/10 flex flex-col"
             onClick={(e) => e.stopPropagation()} 
           >
-            {/* Imagen Principal */}
             <div className="relative flex-1 w-full h-full bg-black group">
-               {/* Animación de fade entre slides */}
                <AnimatePresence mode="wait">
                  <motion.div
                     key={currentIndex}
@@ -73,7 +68,6 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
                  </motion.div>
                </AnimatePresence>
 
-               {/* Botones de Navegación (Solo si hay más de 1 imagen) */}
                {project.images.length > 1 && (
                   <>
                       <button 
@@ -92,7 +86,6 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
                )}
             </div>
 
-            {/* Footer del Modal: Título e Indicadores */}
             <div className="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col items-center gap-3 pointer-events-none">
                 <h3 className="text-white text-xl font-bold drop-shadow-md tracking-tight">{project.title}</h3>
                 
@@ -115,12 +108,10 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
   )
 }
 
-// --- 2. TARJETA DE PROYECTO (GRID) ---
 export function ProjectCard(project: Project & { index: number }) {
   const [isHovered, setIsHovered] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
-  // Seleccionamos la primera imagen como portada.
   const thumbnail = project.images && project.images.length > 0 
     ? project.images[0] 
     : "/static/placeholder.jpg"
@@ -134,7 +125,6 @@ export function ProjectCard(project: Project & { index: number }) {
             onClick={() => setModalOpen(true)} 
             whileHover={{ y: -5 }}
         >
-            {/* Thumbnail del Proyecto */}
             <div className="relative w-full aspect-video overflow-hidden bg-neutral-800">
                 <Image 
                     src={thumbnail} 
@@ -144,7 +134,6 @@ export function ProjectCard(project: Project & { index: number }) {
                     sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 
-                {/* Overlay al hacer Hover */}
                 <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
                     <span className="px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium flex items-center gap-2 shadow-xl">
                         <ExternalLink size={20} /> Ver Galería
@@ -152,7 +141,6 @@ export function ProjectCard(project: Project & { index: number }) {
                 </div>
             </div>
 
-            {/* Contenido de la Tarjeta */}
             <div className="p-8 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-3xl font-bold text-white group-hover:text-blue-400 transition-colors">{project.title}</h3>

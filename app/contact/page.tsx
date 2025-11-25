@@ -15,35 +15,26 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { CtaSection } from "@/components/cta-section";
-
-// Configura aquí tus enlaces reales
-const MY_EMAIL = "gonzaloisique777@gmail.com";
-const WEBSITE_URL = "https://tu-portfolio.com"; // Pon aquí tu URL real
+import { siteConfig } from "@/lib/site-config";
 
 const socialLinks = [
   {
     icon: Github,
     label: "GitHub",
-    href: "https://github.com/tuusuario", // Actualiza con tu link
-    handle: "@tuusuario",
+    href: siteConfig.links.github,
+    handle: "@Gonzalo777ic",
   },
   {
     icon: Linkedin,
     label: "LinkedIn",
-    href: "https://linkedin.com/in/tuusuario", // Actualiza con tu link
-    handle: "@tuusuario",
-  },
-  {
-    icon: Twitter,
-    label: "X (Twitter)",
-    href: "https://twitter.com/tuusuario", // Actualiza con tu link
-    handle: "@tuusuario",
+    href: siteConfig.links.linkedin,
+    handle: "@gonzalo-isique",
   },
   {
     icon: Mail,
     label: "Email",
-    href: `mailto:${MY_EMAIL}`,
-    handle: MY_EMAIL,
+    href: `mailto:${siteConfig.links.email}`,
+    handle: siteConfig.links.email,
   },
 ];
 
@@ -52,7 +43,7 @@ export default function Contact() {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(WEBSITE_URL);
+    navigator.clipboard.writeText(siteConfig.links.website);
     setIsCopied(true);
     toast({
       title: "¡Enlace copiado!",
@@ -64,7 +55,6 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen relative text-foreground">
-      {/* --- 1. FONDO FIJO --- */}
       <div
         className="fixed inset-0 z-0 bg-black"
         style={{
@@ -74,25 +64,20 @@ export default function Contact() {
           backgroundAttachment: "fixed",
         }}
       >
-        {/* Overlay para oscurecer la imagen y dar contraste */}
         <div className="absolute inset-0 bg-black/90"></div>
       </div>
 
-      {/* --- 2. NAVBAR (z-index alto para estar encima de todo) --- */}
       <div className="relative z-50">
         <Navbar />
       </div>
 
-      {/* --- 3. CONTENIDO PRINCIPAL (z-index medio para estar sobre el fondo) --- */}
       <main className="relative z-10 min-h-screen flex flex-col items-center justify-center py-20 px-4 sm:px-6">
-        {/* Profile Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center text-center space-y-6 max-w-2xl w-full"
         >
-          {/* Avatar / Profile Picture */}
           <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl">
             <img
               src="/static/1.jpeg"
@@ -101,13 +86,11 @@ export default function Contact() {
             />
           </div>
 
-          {/* Name & Title */}
           <div className="space-y-3">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
               Gonzalo Isique
             </h1>
 
-            {/* Badges / Roles */}
             <div className="flex flex-wrap justify-center gap-2 mt-3">
               <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
                 Developer
@@ -118,9 +101,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Main Actions Buttons */}
           <div className="flex flex-row gap-4 w-full max-w-md justify-center pt-4">
-            {/* Website Button */}
             <Button
               onClick={handleCopyLink}
               className="flex-1 bg-white text-black hover:bg-white/90 h-12 rounded-full transition-all font-medium"
@@ -133,8 +114,7 @@ export default function Contact() {
               )}
             </Button>
 
-            {/* Email Button */}
-            <a href={`mailto:${MY_EMAIL}`} className="flex-1">
+            <a href={`mailto:${siteConfig.links.email}`} className="flex-1">
               <Button
                 variant="outline"
                 className="w-full h-12 rounded-full bg-transparent hover:bg-white/10 border-white/20 text-white"
@@ -150,7 +130,6 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        {/* Social Links Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

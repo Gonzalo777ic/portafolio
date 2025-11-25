@@ -14,9 +14,8 @@ export function SpotifyCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       className="group relative w-full h-full min-h-[352px] bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden flex flex-col cursor-pointer"
-      onClick={() => setIsOpen(true)} // <--- ESTO ACTIVA EL GLOBAL PLAYER
+      onClick={() => setIsOpen(true)} 
     >
-      {/* FONDO VISUAL (Igual que antes) */}
       <div className="absolute inset-0 z-0">
         <Image 
           src="https://i.scdn.co/image/ab67616d0000b2739c32b32299a7472053b02523" 
@@ -27,7 +26,6 @@ export function SpotifyCard() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
       </div>
 
-      {/* CONTENIDO INVITACIÓN */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center p-6 space-y-4">
         
         {/* Carátula */}

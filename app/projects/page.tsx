@@ -6,7 +6,6 @@ import { ProjectCard } from "@/components/projects/project-card";
 import { motion } from "framer-motion";
 import { CtaSection } from "@/components/cta-section";
 
-// --- DATOS DE EJEMPLO ---
 const projects = [
   {
     title: "E-Commerce Platform",
@@ -15,7 +14,6 @@ const projects = [
     tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
     github: "https://github.com",
     demo: "https://example.com",
-    // Asegúrate de que estas imágenes existan en la carpeta public/static/
     images: ["static/1.jpeg", "static/2.jpeg", "static/3.jpeg"],
   },
   {
@@ -87,20 +85,15 @@ const containerVariants = {
 export default function Projects() {
   return (
     <div className="relative min-h-screen bg-black text-foreground">
-      {/* FONDO FIJO CON TEXTURA BW */}
       <div
         className="fixed inset-0 z-0 bg-black"
         style={{
-          // Usamos la propiedad `backgroundImage` de CSS
           backgroundImage: `url('/static/bw.jpg')`,
-          // Propiedades para que la imagen cubra todo y se mantenga fija al hacer scroll
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
-          // Opcional: Oscurecer un poco la imagen para el contraste, usando un pseudo-elemento o un overlay en la imagen
         }}
       >
-        {/* Overlay sutil para oscurecer la imagen de fondo si es necesario y garantizar el contraste */}
         <div className="absolute inset-0 bg-black/90"></div>
       </div>
 
@@ -111,8 +104,6 @@ export default function Projects() {
       <main className="relative z-10 min-h-screen pt-32 pb-20 px-4">
         <div className="max-w-5xl mx-auto space-y-16">
           {" "}
-          {/* max-w-5xl para que no se estiren demasiado */}
-          {/* Header Section */}
           <motion.div
             className="text-center space-y-6"
             initial={{ opacity: 0, y: 20 }}
@@ -129,9 +120,8 @@ export default function Projects() {
               Proyectos
             </p>
           </motion.div>
-          {/* Projects Grid - CAMBIADO A 1 COLUMNA PARA HACERLAS GIGANTES */}
           <motion.div
-            className="grid grid-cols-1 gap-16" // Gap grande para separar proyectos gigantes
+            className="grid grid-cols-1 gap-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"

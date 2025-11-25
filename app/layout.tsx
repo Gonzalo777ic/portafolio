@@ -8,7 +8,6 @@ import { ParticleBackground } from "@/components/particle-background"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
-// NUEVOS IMPORTS
 import { PlayerProvider } from "@/components/player-context"
 import { GlobalPlayer } from "@/components/global-player"
 
@@ -46,9 +45,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PlayerProvider> {/* ENVOLVEMOS TODO */}
+          <PlayerProvider> 
             
-            {/* El reproductor global vive aquí, fuera de las páginas, para no recargarse */}
             <GlobalPlayer />
 
             <ParticleBackground />

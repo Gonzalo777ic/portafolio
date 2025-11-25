@@ -16,7 +16,7 @@ export const skillsData = {
       { name: "Zod", icon: "https://cdn.simpleicons.org/zod/3E67B1" },
       { name: "Zustand", icon: "https://repository-images.githubusercontent.com/180328715/fca49300-e7f1-11ea-9f51-cfd949b31560" },
       { name: "Bootstrap", icon: "https://cdn.simpleicons.org/bootstrap/7952B3" },
-      { name: "Responsive Design", icon: "https://cdn.simpleicons.org/materialdesign/ffffff" }, // Icono Material Design como referencia
+      { name: "Responsive Design", icon: "https://cdn.simpleicons.org/materialdesign/ffffff" }, 
       { name: "Expo", icon: "https://cdn.simpleicons.org/expo/ffffff" },
     ],
   },
@@ -46,7 +46,7 @@ export const skillsData = {
       { name: "Kubernetes", icon: "https://cdn.simpleicons.org/kubernetes/326CE5" },
       { name: "GCP", icon: "https://cdn.simpleicons.org/googlecloud/4285F4" },
       { name: "GitHub Actions", icon: "https://cdn.simpleicons.org/githubactions/2088FF" },
-      { name: "CI/CD", icon: "https://cdn.simpleicons.org/gitlab/FCA121" }, // GitLab como símbolo de CI/CD
+      { name: "CI/CD", icon: "https://cdn.simpleicons.org/gitlab/FCA121" }, 
     ],
   },
   Other: {
@@ -58,17 +58,17 @@ export const skillsData = {
       { name: "RUP", icon: "https://cdn.simpleicons.org/uml/008000" }, 
       { name: "Diagramas UML", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/UML_logo.svg" },
       { name: "Linux", icon: "https://cdn.simpleicons.org/linux/FCC624" },
-            { name: "Postman", icon: "https://cdn.simpleicons.org/postman/FF6C37" }, // Postman oficial
+            { name: "Postman", icon: "https://cdn.simpleicons.org/postman/FF6C37" }, 
 
-      { name: "DSA", icon: "https://cdn.simpleicons.org/leetcode/FFA116" }, // LeetCode como referencia a Algoritmos
-      { name: "Critical Thinking", icon: "https://cdn.simpleicons.org/openai/ffffff" }, // Icono abstracto (Inteligencia)
-      { name: "Problem Solving", icon: "https://cdn.simpleicons.org/hackerrank/2EC866" }, // HackerRank como referencia
+      { name: "DSA", icon: "https://cdn.simpleicons.org/leetcode/FFA116" }, 
+      { name: "Critical Thinking", icon: "https://cdn.simpleicons.org/openai/ffffff" }, 
+      { name: "Problem Solving", icon: "https://cdn.simpleicons.org/hackerrank/2EC866" }, 
       { name: "Excel", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Microsoft_Office_Excel_%282019%E2%80%932025%29.svg/826px-Microsoft_Office_Excel_%282019%E2%80%932025%29.svg.png" },
-      { name: "Power BI", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/New_Power_BI_Logo.svg/2048px-New_Power_BI_Logo.svg.png" }, // Power BI oficial
+      { name: "Power BI", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/New_Power_BI_Logo.svg/2048px-New_Power_BI_Logo.svg.png" }, 
       { name: "Machine Learning", icon: "https://cdn.simpleicons.org/tensorflow/FF6F00" },
       { name: "Jest", icon: "https://cdn.simpleicons.org/jest/C21325" },
       { name: "Ngrok", icon: "https://cdn.simpleicons.org/ngrok/ffffff" },
-      { name: "System Design", icon: "https://cdn.simpleicons.org/blueprint/ffffff" }, // Blueprint icon
+      { name: "System Design", icon: "https://cdn.simpleicons.org/blueprint/ffffff" }, 
       { name: "TOGAF", icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCuj8qdhIcMomeAgAi8QOpNvHvWztj5SLAtA&s" },
       { name: "Bizagi", icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRripaurgH1sQd_zTqPRPDuLmAUN9m8UB-wyw&s" },
       { name: "PlantUML", icon: "https://cdn.hashnode.com/res/hashnode/image/upload/v1609283590230/mqeCBmvO_.png" },

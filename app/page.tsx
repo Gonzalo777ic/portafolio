@@ -12,7 +12,7 @@ import { ServicesSection } from "@/components/services-section";
 import { ValuesMarquee } from "@/components/values-marquee";
 import { PersonalFavorites } from "@/components/personal-favorites";
 import { CtaSection } from "@/components/cta-section";
-// Variantes de animación (sin cambios)
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -32,12 +32,11 @@ const itemVariants = {
 
 export default function Home() {
   return (
-    // CORRECCIÓN IMPORTANTE: Eliminado 'overflow-x-hidden' de aquí para que funcione sticky
+
     <main className="flex flex-col w-full">
-      {/* === SECCIÓN 1: HERO === */}
-      {/* Movemos el overflow-x-hidden AQUÍ, solo donde está la Tierra */}
+
       <section className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden">
-        {/* Contenido del Hero */}
+
         <div className="relative z-20 w-full max-w-5xl mx-auto px-4 flex flex-col items-center text-center">
           <motion.div
             className="space-y-8"
@@ -114,7 +113,6 @@ export default function Home() {
 
       <ServicesSection />
 
-      {/* SECCIÓN SKILLS */}
       <div className="w-full overflow-hidden">
         <HomeSkills />
       </div>

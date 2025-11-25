@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { siteConfig } from "@/lib/site-config";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -58,7 +59,12 @@ export function Navbar() {
             size="sm"
             className="rounded-full bg-neutral-800 text-white hover:bg-neutral-700 border border-white/5 shadow-inner"
           >
-            <Link href="/contact">Book a Call</Link>
+            <a
+              href={`mailto:${siteConfig.links.email}`}
+              onClick={() => setIsOpen(false)}
+            >
+              Enviar gmail
+            </a>
           </Button>
         </nav>
       </header>
@@ -77,14 +83,12 @@ export function Navbar() {
 
           <SheetContent
             side="right"
-            // Agregamos [&>button]:hidden al final para ocultar la X por defecto
             className="w-[70%] sm:w-[350px] bg-neutral-950 border-l border-neutral-800 text-white p-0 [&>button]:hidden"
           >
             <SheetTitle className="sr-only">Menu</SheetTitle>
             <SheetDescription className="sr-only">Navigation</SheetDescription>
 
             <div className="flex flex-col h-full">
-              {/* Encabezado del menú con botón de cerrar */}
               <div className="flex items-center justify-between p-6">
                 <span className="text-xl font-bold tracking-tight">
                   Portfolio
@@ -100,7 +104,6 @@ export function Navbar() {
                 </Button>
               </div>
 
-              {/* CONTENEDOR DE ENLACES: Centrado Vertical y Horizontal */}
               <div className="flex-1 flex flex-col justify-center items-center gap-8">
                 {links.map((link) => {
                   const isActive = pathname === link.href;
@@ -110,7 +113,7 @@ export function Navbar() {
                       href={link.href}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        "text-2xl sm:text-3xl font-light transition-all duration-300 hover:scale-105", // Ajusté un poco el tamaño texto base
+                        "text-2xl sm:text-3xl font-light transition-all duration-300 hover:scale-105",
                         isActive
                           ? "text-blue-500 font-semibold"
                           : "text-neutral-400 hover:text-white"
@@ -122,15 +125,17 @@ export function Navbar() {
                 })}
               </div>
 
-              {/* Botón Inferior */}
               <div className="p-6 pb-12">
                 <Button
                   asChild
                   className="w-full rounded-full bg-white text-black hover:bg-neutral-200 h-10 text-base font-medium"
                 >
-                  <Link href="/contact" onClick={() => setIsOpen(false)}>
-                    Book a Call
-                  </Link>
+                  <a
+                    href={`mailto:${siteConfig.links.email}`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Enviar gmail
+                  </a>
                 </Button>
               </div>
             </div>

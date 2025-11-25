@@ -3,7 +3,6 @@
 import { GraduationCap, Award } from "lucide-react";
 import React from "react";
 
-// Componente auxiliar para los logros académicos (Debe estar definido antes o exportado)
 function AchievementBadge({
   text,
   isHighlight,
@@ -28,7 +27,6 @@ function AchievementBadge({
 export function AcademicBrainCard() {
   return (
     <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl shadow-xl p-6 space-y-6">
-      {/* Título */}
       <div className="flex items-start gap-3">
         <div className="p-3 rounded-xl bg-purple-500/20 text-purple-300 shadow-inner">
           <GraduationCap className="w-6 h-6" />
@@ -44,10 +42,8 @@ export function AcademicBrainCard() {
         </div>
       </div>
 
-      {/* Línea separadora suave */}
       <div className="h-px w-full bg-white/10" />
 
-      {/* Badges */}
       <div className="space-y-3">
         <div className="flex flex-wrap gap-3">
           <AchievementBadge
@@ -71,4 +67,3 @@ export function AcademicBrainCard() {
   );
 }
 
-// Nota: No necesitas exportar AchievementBadge si solo se usa aquí.

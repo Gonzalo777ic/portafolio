@@ -4,14 +4,12 @@ import { motion } from "framer-motion"
 import { skillsData } from "../skills-data"
 import { useMemo } from "react"
 
-// Variantes optimizadas: Stagger (escalera) solo en desktop si se desea, 
-// pero aquí lo mantenemos suave para todos.
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.01, // Muy rápido para que no se sienta eterno en móvil
+      staggerChildren: 0.01, 
     },
   },
 }
@@ -21,9 +19,6 @@ const itemVariants = {
   visible: { opacity: 1, scale: 1 },
 }
 
-// AQUÍ ESTÁ EL TRUCO:
-// Usamos prefijos 'md:' para que los efectos pesados (shadow glow) SOLO carguen en PC.
-// En móvil solo tendrán color de fondo y texto.
 const colors: Record<string, string> = {
   front: "bg-cyan-900/20 text-cyan-300 border-cyan-500/30 md:shadow-[0_0_15px_rgba(40,255,255,0.2)]",
   back: "bg-violet-900/20 text-violet-300 border-violet-500/30 md:shadow-[0_0_15px_rgba(150,50,255,0.2)]",
@@ -60,14 +55,13 @@ export function SkillsScatter() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }} // Margin ayuda a que empiece a cargar antes de que el usuario llegue
+      viewport={{ once: true, margin: "-50px" }} 
       className="w-full py-10 flex flex-wrap justify-center gap-2 md:gap-3 max-w-4xl mx-auto"
     >
       {skillsForScatter.map((skill, index) => (
         <motion.div
           key={`${skill.name}-${index}`}
           variants={itemVariants}
-          // Reducimos la interacción en móvil (hover en touch no tiene sentido y consume recursos si se queda "pegado")
           whileHover={{ scale: 1.05, zIndex: 10 }} 
           className={`
             px-3 py-1.5 md:px-5 md:py-3 rounded-full border font-medium text-xs md:text-sm cursor-default

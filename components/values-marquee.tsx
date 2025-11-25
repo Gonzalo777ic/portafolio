@@ -3,7 +3,6 @@
 import React from "react"
 import { motion } from "framer-motion"
 
-// VALORES TÉCNICOS Y CONCEPTUALES (Ciclo de Ingeniería)
 const row1 = [
   "ABSTRACCIÓN", 
   "IMPLEMENTACIÓN", 
@@ -18,7 +17,6 @@ const row1 = [
   "FLEXIBILIDAD"
 ]
 
-// VALORES HUMANOS Y DE IDENTIDAD (El motor del ingeniero)
 const row2 = [
   "IDENTIDAD",
   "RIGOR",
@@ -68,7 +66,7 @@ function MarqueeRow({
   return (
     <div className="flex overflow-hidden whitespace-nowrap">
       <motion.div 
-        className="flex gap-8 pr-8 items-center" // Ajustado gap para incluir separador
+        className="flex gap-8 pr-8 items-center" 
         initial={{ x: direction === "left" ? 0 : "-50%" }}
         animate={{ x: direction === "left" ? "-50%" : 0 }}
         transition={{ 
@@ -77,7 +75,6 @@ function MarqueeRow({
           repeat: Infinity 
         }}
       >
-        {/* Duplicamos la lista varias veces para asegurar el loop */}
         {[...items, ...items, ...items, ...items].map((item, idx) => (
           <div key={idx} className="flex items-center gap-8">
             <span 
@@ -85,7 +82,6 @@ function MarqueeRow({
             >
               {item}
             </span>
-            {/* EL SEPARADOR (Estrella) */}
             <span className={`text-4xl md:text-5xl ${separatorColor} opacity-50`}>
               ✦
             </span>
