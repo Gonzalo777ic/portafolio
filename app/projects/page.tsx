@@ -1,75 +1,12 @@
 "use client";
 
 import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { Footer } from "@/components/footer"; 
 import { ProjectCard } from "@/components/projects/project-card";
 import { motion } from "framer-motion";
 import { CtaSection } from "@/components/cta-section";
 
-const projects = [
-  {
-    title: "E-Commerce Platform",
-    description:
-      "Una plataforma de comercio electrónico completa con catálogo de productos, carrito de compras, pasarela de pago segura y panel de administración.",
-    tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
-    github: "https://github.com",
-    demo: "https://example.com",
-    images: ["static/1.jpeg", "static/2.jpeg", "static/3.jpeg"],
-  },
-  {
-    title: "Task Management App",
-    description:
-      "Aplicación de gestión de tareas en tiempo real con funciones colaborativas, seguimiento de progreso y notificaciones push.",
-    tags: ["React", "Firebase", "Framer Motion", "Tailwind CSS"],
-    github: "https://github.com",
-    demo: "https://example.com",
-    images: ["/static/1.jpeg"],
-  },
-  {
-    title: "Analytics Dashboard",
-    description:
-      "Dashboard interactivo de análisis que muestra datos en tiempo real con gráficos dinámicos y reportes automatizados.",
-    tags: ["Next.js", "Recharts", "TypeScript", "Supabase"],
-    github: "https://github.com",
-    demo: "https://example.com",
-    images: [
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    ],
-  },
-  {
-    title: "Weather App",
-    description:
-      "Aplicación meteorológica minimalista con datos en tiempo real, pronósticos por hora y detección de ubicación automática.",
-    tags: ["React", "OpenWeather API", "Tailwind CSS", "Geolocation"],
-    github: "https://github.com",
-    demo: "https://example.com",
-    images: [
-      "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&q=80",
-    ],
-  },
-  {
-    title: "Blog Platform",
-    description:
-      "Markdown-based blogging platform with search, categories, and dark mode support.",
-    tags: ["Next.js", "MDX", "Contentful", "Tailwind CSS"],
-    github: "https://github.com",
-    demo: "https://example.com",
-    images: [
-      "https://images.unsplash.com/photo-1499750310159-5254f412d278?w=800&q=80",
-    ],
-  },
-  {
-    title: "Social Media Feed",
-    description:
-      "Social media feed with infinite scroll, likes, comments, and real-time notifications.",
-    tags: ["React", "Node.js", "MongoDB", "Socket.io"],
-    github: "https://github.com",
-    demo: "https://example.com",
-    images: [
-      "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80",
-    ],
-  },
-];
+import { projectsData } from "@/lib/projects-data";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -85,6 +22,7 @@ const containerVariants = {
 export default function Projects() {
   return (
     <div className="relative min-h-screen bg-black text-foreground">
+      {/* Fondo estático o dinámico */}
       <div
         className="fixed inset-0 z-0 bg-black"
         style={{
@@ -103,7 +41,6 @@ export default function Projects() {
 
       <main className="relative z-10 min-h-screen pt-32 pb-20 px-4">
         <div className="max-w-5xl mx-auto space-y-16">
-          {" "}
           <motion.div
             className="text-center space-y-6"
             initial={{ opacity: 0, y: 20 }}
@@ -114,20 +51,23 @@ export default function Projects() {
               PORTAFOLIO
             </p>
             <h1 className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg tracking-tight">
-              Algunos Proyectos
+              Todos los Proyectos
             </h1>
             <p className="text-lg text-neutral-400 max-w-2xl mx-auto">
-              Proyectos
+              Explora mi colección completa de desarrollos, desde aplicaciones
+              web hasta soluciones cloud.
             </p>
           </motion.div>
+
           <motion.div
             className="grid grid-cols-1 gap-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            {projects.map((project, index) => (
-              <motion.div key={index} variants={containerVariants}>
+            {/* 2. USAR LA VARIABLE IMPORTADA */}
+            {projectsData.map((project, index) => (
+              <motion.div key={project.id} variants={containerVariants}>
                 <ProjectCard {...project} index={index} />
               </motion.div>
             ))}

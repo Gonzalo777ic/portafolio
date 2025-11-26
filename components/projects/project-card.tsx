@@ -4,25 +4,24 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { Github, ExternalLink, X, ChevronLeft, ChevronRight } from "lucide-react"
+// 1. IMPORTAMOS LA INTERFAZ CENTRAL (Single Source of Truth)
+import { type Project } from "@/lib/projects-data"
 
-interface Project {
-  title: string
-  description: string
-  tags: string[]
-  github: string
-  demo: string
-  images: string[]
-}
+// Eliminamos la interfaz "Project" local para evitar conflictos
 
 function ProjectModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   if (!project) return null
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % project.images.length)
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + project.images.length) % project.images.length)
+  // Validación de seguridad por si images viene vacío
+  const images = project.images || []
+  if (images.length === 0) return null
 
-  const currentImage = project.images[currentIndex]
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % images.length)
+  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
+
+  const currentImage = images[currentIndex]
 
   return (
     <AnimatePresence>
@@ -58,17 +57,20 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
                     transition={{ duration: 0.3 }}
                     className="absolute inset-0"
                  >
-                   <Image 
-                     src={currentImage} 
-                     alt={`${project.title} screenshot ${currentIndex + 1}`} 
-                     fill 
-                     className="object-contain" 
-                     priority
-                   />
+                   {/* Verificamos que exista currentImage antes de renderizar */}
+                   {currentImage && (
+                     <Image 
+                       src={currentImage} 
+                       alt={`${project.title} screenshot ${currentIndex + 1}`} 
+                       fill 
+                       className="object-contain" 
+                       priority
+                     />
+                   )}
                  </motion.div>
                </AnimatePresence>
 
-               {project.images.length > 1 && (
+               {images.length > 1 && (
                   <>
                       <button 
                         onClick={(e) => { e.stopPropagation(); prevSlide(); }} 
@@ -89,9 +91,9 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
             <div className="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col items-center gap-3 pointer-events-none">
                 <h3 className="text-white text-xl font-bold drop-shadow-md tracking-tight">{project.title}</h3>
                 
-                {project.images.length > 1 && (
+                {images.length > 1 && (
                   <div className="flex gap-2 pointer-events-auto">
-                    {project.images.map((_, idx) => (
+                    {images.map((_, idx) => (
                       <button 
                         key={idx} 
                         onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
@@ -114,7 +116,7 @@ export function ProjectCard(project: Project & { index: number }) {
 
   const thumbnail = project.images && project.images.length > 0 
     ? project.images[0] 
-    : "/static/placeholder.jpg"
+    : "/static/placeholder.jpg" // Asegúrate de tener un placeholder o usa un color sólido
 
   return (
     <>
@@ -145,26 +147,32 @@ export function ProjectCard(project: Project & { index: number }) {
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-3xl font-bold text-white group-hover:text-blue-400 transition-colors">{project.title}</h3>
                   <div className="flex gap-3">
-                      <a 
-                          href={project.github} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg border border-transparent hover:border-white/10"
-                          onClick={(e) => e.stopPropagation()}
-                          title="View Code"
-                      >
-                          <Github size={24} />
-                      </a>
-                      <a 
-                          href={project.demo} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg border border-transparent hover:border-white/10"
-                          onClick={(e) => e.stopPropagation()}
-                          title="Live Demo"
-                      >
-                          <ExternalLink size={24} />
-                      </a>
+                      {/* 2. RENDERIZADO CONDICIONAL: Solo mostramos el botón si existe el link */}
+                      {project.github && (
+                        <a 
+                            href={project.github} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg border border-transparent hover:border-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                            title="View Code"
+                        >
+                            <Github size={24} />
+                        </a>
+                      )}
+                      
+                      {project.demo && (
+                        <a 
+                            href={project.demo} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg border border-transparent hover:border-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                            title="Live Demo"
+                        >
+                            <ExternalLink size={24} />
+                        </a>
+                      )}
                   </div>
                 </div>
                 
