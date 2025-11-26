@@ -1,26 +1,37 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
-import { motion, useMotionValue, PanInfo, AnimatePresence } from "framer-motion"
+import React, { useState, useEffect } from "react"
+import { motion, useMotionValue, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { X, ZoomIn } from "lucide-react"
 
-const images = [
-  "/static/1.jpeg", 
-  "/static/2.jpeg", 
-  "/static/3.jpeg", 
-  "/static/5.png", 
-]
-
-const CUBE_SIZE = 480
-const HALF_SIZE = CUBE_SIZE / 2
+const images = ["/static/1.jpeg", "/static/2.jpeg", "/static/3.jpeg", "/static/5.png"]
 
 export function RotatingCube() {
   const [isHovered, setIsHovered] = useState(false)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  
-  const rotateY = useMotionValue(0)
+  const [cubeSize, setCubeSize] = useState(480) // Tamaño por defecto
 
+  const rotateY = useMotionValue(0)
+  const halfSize = cubeSize / 2
+
+  // Ajuste responsive del cubo
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setCubeSize(300) // Tamaño más pequeño en móviles
+      } else if (window.innerWidth < 1024) {
+        setCubeSize(400) // Tablet
+      } else {
+        setCubeSize(480) // Desktop
+      }
+    }
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  // Rotación automática
   useEffect(() => {
     let animationFrameId: number
     const animate = () => {
@@ -38,7 +49,7 @@ export function RotatingCube() {
       <div className="relative w-full flex justify-center items-center py-20 perspective-1000">
         <div 
           className="relative"
-          style={{ width: CUBE_SIZE, height: CUBE_SIZE }}
+          style={{ width: cubeSize, height: cubeSize }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -48,28 +59,27 @@ export function RotatingCube() {
           >
             <CubeFace 
               img={images[0]} 
-              transform={`translateZ(${HALF_SIZE}px)`} 
+              transform={`translateZ(${halfSize}px)`} 
               onClick={() => setSelectedImage(images[0])}
             />
             <CubeFace 
               img={images[1]} 
-              transform={`rotateY(90deg) translateZ(${HALF_SIZE}px)`} 
+              transform={`rotateY(90deg) translateZ(${halfSize}px)`} 
               onClick={() => setSelectedImage(images[1])}
             />
             <CubeFace 
               img={images[2]} 
-              transform={`rotateY(180deg) translateZ(${HALF_SIZE}px)`} 
+              transform={`rotateY(180deg) translateZ(${halfSize}px)`} 
               onClick={() => setSelectedImage(images[2])}
             />
             <CubeFace 
               img={images[3]} 
-              transform={`rotateY(-90deg) translateZ(${HALF_SIZE}px)`} 
+              transform={`rotateY(-90deg) translateZ(${halfSize}px)`} 
               onClick={() => setSelectedImage(images[3])}
             />
 
-            <div className="absolute inset-0 bg-neutral-900" style={{ transform: `rotateX(90deg) translateZ(${HALF_SIZE}px)` }} />
-            <div className="absolute inset-0 bg-neutral-900" style={{ transform: `rotateX(-90deg) translateZ(${HALF_SIZE}px)` }} />
-
+            <div className="absolute inset-0 bg-neutral-900" style={{ transform: `rotateX(90deg) translateZ(${halfSize}px)` }} />
+            <div className="absolute inset-0 bg-neutral-900" style={{ transform: `rotateX(-90deg) translateZ(${halfSize}px)` }} />
           </motion.div>
         </div>
       </div>

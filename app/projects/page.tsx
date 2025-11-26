@@ -1,11 +1,9 @@
 "use client";
 
 import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer"; 
-import { ProjectCard } from "@/components/projects/project-card";
+import { ProjectCard } from "@/components/projects/project-card"; // Asegúrate de la ruta
 import { motion } from "framer-motion";
 import { CtaSection } from "@/components/cta-section";
-
 import { projectsData } from "@/lib/projects-data";
 
 const containerVariants = {
@@ -22,7 +20,7 @@ const containerVariants = {
 export default function Projects() {
   return (
     <div className="relative min-h-screen bg-black text-foreground">
-      {/* Fondo estático o dinámico */}
+      {/* Fondo */}
       <div
         className="fixed inset-0 z-0 bg-black"
         style={{
@@ -40,7 +38,7 @@ export default function Projects() {
       </div>
 
       <main className="relative z-10 min-h-screen pt-32 pb-20 px-4">
-        <div className="max-w-5xl mx-auto space-y-16">
+        <div className="max-w-4xl mx-auto space-y-16">
           <motion.div
             className="text-center space-y-6"
             initial={{ opacity: 0, y: 20 }}
@@ -60,15 +58,15 @@ export default function Projects() {
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 gap-16"
+            className="grid grid-cols-1 gap-8" // gap-8 es suficiente
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            {/* 2. USAR LA VARIABLE IMPORTADA */}
             {projectsData.map((project, index) => (
               <motion.div key={project.id} variants={containerVariants}>
-                <ProjectCard {...project} index={index} />
+                {/* Pasamos el objeto project completo */}
+                <ProjectCard project={project} index={index} />
               </motion.div>
             ))}
           </motion.div>
