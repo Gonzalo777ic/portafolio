@@ -294,7 +294,7 @@ export const projectsData: Project[] = [
     ],
     tags: ["HTML5", "CSS3", "JavaScript", "SEO"],
     images: [],
-    github: "https://github.com/Gonzalo777ic", // No proporcionaste link específico, puse el perfil
+    github: "https://github.com/Gonzalo777ic", 
   },
   {
     id: "pharmayap",
