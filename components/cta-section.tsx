@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion"; // 1. Importamos el tipo Variants
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
-const textVariants = {
+// 2. Tipamos explícitamente los objetos de animación
+const textVariants: Variants = {
   hidden: { opacity: 0, y: 20, filter: "blur(10px)" }, 
   visible: { 
     opacity: 1, 
@@ -18,7 +19,7 @@ const textVariants = {
   }
 };
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -31,7 +32,7 @@ const containerVariants = {
 
 export function CtaSection() {
   return (
-    <section className="w-full relative h-[110vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+    <section className="w-full relative h-[100vh] min-h-[600px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
           src="/static/bw.jpg"
@@ -44,14 +45,15 @@ export function CtaSection() {
         <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center flex flex-col items-center">
+      {/* Agregamos px-4 y w-full para asegurar márgenes en móvil */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 w-full text-center flex flex-col items-center justify-center h-full">
         
         <motion.div
           initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="mb-12 relative w-24 h-24 md:w-32 md:h-32"
+          className="mb-8 md:mb-12 relative w-20 h-20 md:w-32 md:h-32"
         >
           <Image 
             src="/static/logo.png" 
@@ -67,19 +69,24 @@ export function CtaSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
+          className="w-full max-w-[90vw]" // Asegura que no se desborde el contenedor
         >
+          {/* CAMBIO DE TAMAÑO DE TEXTO AQUÍ */}
+          {/* De text-5xl pasamos a text-3xl en móvil, luego sube a 5xl, 7xl y 8xl progresivamente */}
           <motion.h2 
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-[1.1] mb-10"
+            className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight md:leading-[1.1] mb-10 break-words"
           >
             <motion.span variants={textVariants} className="block">
               DEL CONCEPTO A LA{" "}
             </motion.span>
             
-            <motion.span variants={textVariants} className="block text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-500">
+            {/* break-words asegura que IMPLEMENTACIÓN baje si es necesario, 
+                pero con text-3xl debería entrar bien */}
+            <motion.span variants={textVariants} className="block text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-500 break-words">
               IMPLEMENTACIÓN
             </motion.span>
             
-            <motion.span variants={textVariants} className="block">
+            <motion.span variants={textVariants} className="block mt-2 md:mt-0">
               DE SISTEMAS <span className="italic font-serif font-light">COMPLETOS!</span>
             </motion.span>
           </motion.h2>
@@ -107,18 +114,17 @@ export function CtaSection() {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-16 space-y-4"
+          className="mt-12 md:mt-16 space-y-4 px-2"
         >
-          <h3 className="text-xl md:text-2xl font-semibold text-white">
-            Entendimiento de las necesidades del cliente y del usuario final
+          <h3 className="text-lg md:text-2xl font-semibold text-white">
+            Entendimiento de las necesidades del cliente
           </h3>
-          <p className="text-neutral-400 max-w-2xl mx-auto text-lg">
+          <p className="text-neutral-400 max-w-xl mx-auto text-base md:text-lg">
             Priorizando aplicaciones usables y amigables que brindan
-            experiencias de usuario fluidas y memorables.
+            experiencias de usuario fluidas.
           </p>
         </motion.div>
       </div>
-
     </section>
   );
 }
