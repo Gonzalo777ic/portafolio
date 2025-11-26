@@ -13,7 +13,6 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         {/* GRID PRINCIPAL */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
-          
           {/* SECCIÓN 1: LOGO Y BIO */}
           {/* Mobile: Centrado | Desktop: Izquierda */}
           <div className="md:col-span-5 space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
@@ -46,12 +45,18 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
+                  <Link
+                    href="/about"
+                    className="hover:text-white transition-colors"
+                  >
                     Sobre mí
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects" className="hover:text-white transition-colors">
+                  <Link
+                    href="/projects"
+                    className="hover:text-white transition-colors"
+                  >
                     Proyectos
                   </Link>
                 </li>
@@ -63,7 +68,10 @@ export function Footer() {
               <h4 className="text-white font-semibold text-lg">Más</h4>
               <ul className="space-y-3 text-neutral-400">
                 <li>
-                  <Link href="/contact" className="hover:text-white transition-colors">
+                  <Link
+                    href="/contact"
+                    className="hover:text-white transition-colors"
+                  >
                     Contacto
                   </Link>
                 </li>
@@ -88,21 +96,23 @@ export function Footer() {
         {/* BARRA INFERIOR (COPYRIGHT & SOCIALS) */}
         {/* Mobile: Columna centrada | Desktop: Fila justificada */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-6 md:gap-4">
-          
           <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
             <p className="text-neutral-500 text-sm">
-              &copy; {currentYear} Gonzalo Isique. Todos los derechos reservados.
+              &copy; {currentYear} Gonzalo Isique. Todos los derechos
+              reservados.
             </p>
-            
+
             {/* Badge "Desarrollado en 24h" */}
             <div className="hidden md:flex items-center gap-2 text-xs text-neutral-600 font-mono bg-neutral-900/50 px-3 py-1 rounded-full border border-white/5">
               <span>⚡ Desarrollado en 24 horas</span>
               <span className="text-neutral-700">|</span>
               <span>Asistido por la IA</span>
             </div>
-             {/* Badge versión Mobile (visible solo en mobile) */}
-             <div className="md:hidden flex items-center gap-2 text-[10px] text-neutral-600 font-mono bg-neutral-900/50 px-3 py-1 rounded-full border border-white/5 mt-2">
-              <span>⚡ Dev en 24h & IA</span>
+            {/* Badge versión Mobile (visible solo en mobile) */}
+            <div className="md:hidden flex items-center gap-2 text-[10px] text-neutral-600 font-mono bg-neutral-900/50 px-3 py-1 rounded-full border border-white/5 mt-2">
+              <span>⚡ Desarrollado en 24 horas</span>
+              <span className="text-neutral-700">|</span>
+              <span>Asistido por la IA</span>{" "}
             </div>
           </div>
 
