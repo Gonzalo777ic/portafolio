@@ -16,6 +16,41 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+  "id": "retail-intelligence-gcp",
+  "title": "Smart Retail Analytics Ecosystem",
+  "description": "Plataforma integral de inteligencia de mercado que monitorea precios y stock de más de 10 retailers tecnológicos en Perú y Amazon global. Arquitectura Cloud-Native que orquesta la extracción masiva de datos, procesamiento ETL y análisis predictivo para detectar oportunidades de arbitraje.",
+  "featured": true,
+  "features": [
+    "Infraestructura Serverless en Google Cloud (GKE/Cloud Run) con Docker",
+    "Data Warehouse en BigQuery para análisis histórico masivo",
+    "Motor de IA con Vertex AI para detección de anomalías de precios",
+    "Scraping distribuido con evasión de anti-bots (Selenium/Python)",
+    "API RESTful optimizada (FastAPI) y Dashboard interactivo"
+  ],
+  "tags": [
+    "Python",
+    "Selenium",
+    "Google Cloud Platform",
+    "BigQuery",
+    "Vertex AI",
+    "Docker & Kubernetes",
+    "FastAPI",
+    "React / Next.js",
+    "Vercel"
+  ],
+  "images": [
+    "/static/scraper/1.png",
+    "/static/scraper/2.png",
+    "/static/scraper/3.png",
+    "/static/scraper/4.png",
+    "/static/scraper/5.png",
+    "/static/scraper/6.png"
+  ],
+  "github": "https://github.com/Gonzalo777ic/scraper-frontend",
+  "githubBackend": "https://github.com/Gonzalo777ic/web-scraper-GCP",
+  "demo": "https://scraper-frontend-bay.vercel.app/"
+},
+  {
     id: "nomos-inventory",
     title: "Nomos Inventory System",
     description:
