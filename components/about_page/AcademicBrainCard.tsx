@@ -50,6 +50,7 @@ export function AcademicBrainCard() {
             text="Décimo Superior en los semestres:"
             isHighlight={true}
           />
+          <AchievementBadge text="Período 2025-2" />
           <AchievementBadge text="Período 2025-1" />
           <AchievementBadge text="Período 2024-2" />
           <AchievementBadge text="Período 2024-1" />
