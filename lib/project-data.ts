@@ -1,15 +1,15 @@
 import { hasDatabase, prisma } from "@/lib/prisma";
-import { projectsData, type Project } from "@/lib/projects-data";
+import type { Project } from "@/lib/projects-data";
 
+/** Solo filas reales de la BD. Sin mocks hardcodeados. */
 export async function getProjects(): Promise<Project[]> {
-  if (!hasDatabase()) return projectsData;
+  if (!hasDatabase()) return [];
 
   try {
     const rows = await prisma.project.findMany({
       where: { deletedAt: null },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
     });
-    if (rows.length === 0) return [];
     return rows.map((row) => ({
       id: row.id,
       title: row.title,
@@ -24,7 +24,7 @@ export async function getProjects(): Promise<Project[]> {
       sortOrder: row.sortOrder,
     }));
   } catch {
-    return projectsData;
+    return [];
   }
 }
 
