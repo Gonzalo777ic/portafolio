@@ -17,7 +17,7 @@ export type LearningFormState = {
 
 function revalidateLearning() {
   revalidatePath("/about");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 function parseTopic(formData: FormData) {

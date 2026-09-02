@@ -13,7 +13,7 @@ export type ProjectFormState = {
 function revalidateProjects() {
   revalidatePath("/");
   revalidatePath("/projects");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 function normalizeUrl(value: string) {

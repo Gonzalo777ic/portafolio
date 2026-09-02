@@ -3,6 +3,8 @@ import { CtaSection } from "@/components/cta-section";
 import { getProjects } from "@/lib/project-data";
 import { getProjectsPage } from "@/lib/projects-page-data";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectsPage() {
   const [projects, page] = await Promise.all([
     getProjects(),

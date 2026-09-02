@@ -13,7 +13,7 @@ export type SkillFormState = {
 function revalidateSkills() {
   revalidatePath("/");
   revalidatePath("/about");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 function parseSkill(formData: FormData) {

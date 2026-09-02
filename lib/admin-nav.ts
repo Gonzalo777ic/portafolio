@@ -39,6 +39,7 @@ export const adminNavGroups: AdminNavGroup[] = [
     label: "Sitio",
     items: [
       { href: "/admin/social", label: "Redes" },
+      { href: "/admin/phones", label: "Celulares" },
       { href: "/admin/footer", label: "Footer" },
     ],
   },

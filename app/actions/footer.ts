@@ -58,6 +58,6 @@ export async function updateFooter(
 
   revalidatePath("/");
   revalidatePath("/contact");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
   return { error: null, success: true };
 }

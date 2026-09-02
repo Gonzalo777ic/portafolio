@@ -13,7 +13,7 @@ export type ExperienceFormState = {
 
 function revalidateExperience() {
   revalidatePath("/about");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 function parseExperience(formData: FormData) {

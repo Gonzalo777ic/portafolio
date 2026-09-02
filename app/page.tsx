@@ -15,6 +15,8 @@ import { getFeaturedProjects } from "@/lib/project-data";
 import { getMarqueeWords } from "@/lib/marquee-data";
 import { getAlbums } from "@/lib/album-data";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const [
     showcase,

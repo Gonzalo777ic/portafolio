@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 import { AdminHeader } from "@/components/admin/admin-header";
 import { AdminNav } from "@/components/admin/admin-nav";
 
+/** Siempre lee la BD: evita servir el admin vacío cacheado tras un seed SQL. */
+export const dynamic = "force-dynamic";
+
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-black text-white">

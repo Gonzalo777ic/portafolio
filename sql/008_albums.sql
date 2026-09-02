@@ -1,5 +1,5 @@
--- Run in Supabase → SQL Editor after 007_marquee_words.sql.
--- Home Spotify albums. Cover image via Cloudinary URL.
+-- Home Spotify albums. Cover: /static/... o URL Cloudinary.
+-- id/updated_at explícitos: Prisma no deja DEFAULT en la BD con db push.
 
 create table if not exists public.albums (
   id uuid primary key default gen_random_uuid(),
@@ -13,8 +13,8 @@ create table if not exists public.albums (
   deleted_at timestamptz
 );
 
-insert into public.albums (title, artist, album_url, image_url, sort_order)
-select *
+insert into public.albums (id, title, artist, album_url, image_url, sort_order, updated_at)
+select gen_random_uuid(), s.title, s.artist, s.album_url, s.image_url, s.sort_order, now()
 from (
   values
     ('Cómplices', 'Luis Miguel', 'https://open.spotify.com/embed/album/63up1MbRz4A0I8gXD7CAQc', '/static/complices.jpeg', 0),
@@ -28,8 +28,13 @@ from (
     ('Te eché al olvido', 'Tony Rosado', 'https://open.spotify.com/embed/album/1NQ8xOglxUhBoBmmjhuN2p', '/static/rosado.jpeg', 8),
     ('Ser Hümano!!', 'Tiro de Gracia', 'https://open.spotify.com/embed/album/3ncIAbJGUE2sQIu0J1TuE0', '/static/de.jpeg', 9),
     ('Avenido', 'Aca Seca Trío', 'https://open.spotify.com/embed/album/3OTOZme69Irx7si5GhpmHg', '/static/trio.jpeg', 10)
-) as seed(title, artist, album_url, image_url, sort_order)
-where not exists (select 1 from public.albums);
+) as s(title, artist, album_url, image_url, sort_order)
+where not exists (
+  select 1 from public.albums existing
+  where existing.title = s.title
+    and existing.artist = s.artist
+    and existing.deleted_at is null
+);
 
 grant select on public.albums to anon, authenticated;
 grant insert, update on public.albums to authenticated;

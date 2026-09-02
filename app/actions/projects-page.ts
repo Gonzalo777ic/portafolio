@@ -54,6 +54,6 @@ export async function updateProjectsPage(
   }
 
   revalidatePath("/projects");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
   return { error: null, success: true };
 }

@@ -12,7 +12,7 @@ export type MarqueeFormState = {
 
 function revalidateMarquee() {
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 export async function createMarqueeWord(

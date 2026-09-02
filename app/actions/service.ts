@@ -12,7 +12,7 @@ export type ServiceFormState = {
 
 function revalidateServices() {
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 function parseService(formData: FormData) {

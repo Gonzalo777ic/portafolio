@@ -13,7 +13,7 @@ export type AlbumFormState = {
 
 function revalidateAlbums() {
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 function parseAlbum(formData: FormData) {

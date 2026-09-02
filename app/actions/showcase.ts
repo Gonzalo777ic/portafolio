@@ -54,6 +54,6 @@ export async function updateShowcase(
   }
 
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
   return { error: null, success: true };
 }

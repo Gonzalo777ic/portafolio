@@ -14,7 +14,7 @@ export type AcademicFormState = {
 
 function revalidateAcademic() {
   revalidatePath("/about");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 }
 
 export async function createAcademicLabel(

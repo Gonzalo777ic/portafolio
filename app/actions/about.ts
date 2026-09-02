@@ -80,6 +80,6 @@ export async function updateAbout(
   revalidatePath("/");
   revalidatePath("/about");
   revalidatePath("/contact");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
   return { error: null, success: true };
 }

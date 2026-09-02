@@ -6,6 +6,8 @@ import { getSkills } from "@/lib/skill-data";
 import { getLearning } from "@/lib/learning-data";
 import { getExperience } from "@/lib/experience-data";
 
+export const dynamic = "force-dynamic";
+
 export default async function AboutPage() {
   const [about, labels, skills, learning, experience] = await Promise.all([
     getAbout(),

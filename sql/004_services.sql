@@ -13,8 +13,10 @@ create table if not exists public.services (
   deleted_at timestamptz
 );
 
-insert into public.services (title, description, icon, icon_color, sort_order)
-select *
+-- Inserta cada servicio solo si aún no existe ese título.
+-- id/updated_at explícitos: Prisma no deja DEFAULT en la BD con db push.
+insert into public.services (id, title, description, icon, icon_color, sort_order, updated_at)
+select gen_random_uuid(), s.title, s.description, s.icon, s.icon_color, s.sort_order, now()
 from (
   values
     (
@@ -38,8 +40,11 @@ from (
       'pink',
       2
     )
-) as seed(title, description, icon, icon_color, sort_order)
-where not exists (select 1 from public.services);
+) as s(title, description, icon, icon_color, sort_order)
+where not exists (
+  select 1 from public.services existing
+  where existing.title = s.title and existing.deleted_at is null
+);
 
 grant select on public.services to anon, authenticated;
 grant insert, update on public.services to authenticated;
