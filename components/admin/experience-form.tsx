@@ -19,7 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { hasCloudinaryEnv, uploadImageToCloudinary } from "@/lib/cloudinary";
+import { useAdminMedia } from "@/components/admin/admin-media-provider";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import {
   EXPERIENCE_KIND_LABELS,
   EXPERIENCE_KINDS,
@@ -51,6 +52,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
   const [imageUrl, setImageUrl] = useState(item?.imageUrl ?? "");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const { cloudinaryReady } = useAdminMedia();
 
   async function handleUpload(file: File | undefined) {
     if (!file) return;
@@ -183,9 +185,10 @@ export function ExperienceForm({ item }: { item?: Experience }) {
 
       <div className="space-y-2">
         <Label className="text-white">Logo o foto</Label>
-        {!hasCloudinaryEnv() ? (
+        {!cloudinaryReady ? (
           <p className="text-xs text-amber-400">
-            Configura Cloudinary en .env.local para subir la imagen.
+            Configura Cloudinary en las variables de entorno para subir la
+            imagen.
           </p>
         ) : null}
         <div className="flex items-center gap-4">
@@ -199,7 +202,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
           <Input
             type="file"
             accept="image/*"
-            disabled={!hasCloudinaryEnv() || uploading}
+            disabled={!cloudinaryReady || uploading}
             onChange={(event) => handleUpload(event.target.files?.[0])}
             className="h-11 bg-white/5 border-white/10 text-white file:text-white"
           />

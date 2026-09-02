@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
-import { hasCloudinaryEnv, uploadImageToCloudinary } from "@/lib/cloudinary";
+import { useAdminMedia } from "@/components/admin/admin-media-provider";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { ABOUT_IMAGE_SLOTS } from "@/lib/about";
 
 type AboutImageSlotsProps = {
@@ -14,7 +15,7 @@ type AboutImageSlotsProps = {
 export function AboutImageSlots({ urls, onChange }: AboutImageSlotsProps) {
   const [busyIndex, setBusyIndex] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const cloudReady = hasCloudinaryEnv();
+  const { cloudinaryReady: cloudReady } = useAdminMedia();
   const slots = Array.from({ length: ABOUT_IMAGE_SLOTS }, (_, i) => urls[i] ?? "");
 
   async function handleFile(index: number, file: File | undefined) {
@@ -38,7 +39,7 @@ export function AboutImageSlots({ urls, onChange }: AboutImageSlotsProps) {
       <Label className="text-white">Imágenes del cubo (4 caras)</Label>
       {!cloudReady ? (
         <p className="text-xs text-amber-400">
-          Configura Cloudinary en .env.local para reemplazar fotos.
+          Configura Cloudinary en las variables de entorno para reemplazar fotos.
         </p>
       ) : null}
       <div className="grid grid-cols-2 gap-4">

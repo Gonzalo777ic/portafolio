@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useAdminMedia } from "@/components/admin/admin-media-provider";
 import { Label } from "@/components/ui/label";
-import { hasCloudinaryEnv, uploadImageToCloudinary } from "@/lib/cloudinary";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 
 export function ProjectImageUploader({
   urls,
@@ -13,7 +14,7 @@ export function ProjectImageUploader({
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const cloudReady = hasCloudinaryEnv();
+  const { cloudinaryReady: cloudReady } = useAdminMedia();
 
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
@@ -39,7 +40,7 @@ export function ProjectImageUploader({
       <Label className="text-white">Imágenes (N)</Label>
       {!cloudReady ? (
         <p className="text-xs text-amber-400">
-          Configura Cloudinary para subir capturas.
+          Configura Cloudinary en las variables de entorno para subir capturas.
         </p>
       ) : null}
       <div className="grid grid-cols-3 gap-2">

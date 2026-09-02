@@ -3,11 +3,12 @@
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { updateFooter, type FooterFormState } from "@/app/actions/footer";
+import { useAdminMedia } from "@/components/admin/admin-media-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { hasCloudinaryEnv, uploadImageToCloudinary } from "@/lib/cloudinary";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import type { FooterContent } from "@/lib/footer";
 
 const initialState: FooterFormState = { error: null, success: false };
@@ -30,6 +31,7 @@ export function FooterForm({ footer }: { footer: FooterContent }) {
   const [photoUrl, setPhotoUrl] = useState(footer.photoUrl);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const { cloudinaryReady } = useAdminMedia();
 
   async function handleUpload(file: File | undefined) {
     if (!file) return;
@@ -86,9 +88,10 @@ export function FooterForm({ footer }: { footer: FooterContent }) {
 
       <div className="space-y-2">
         <Label className="text-white">Foto circular</Label>
-        {!hasCloudinaryEnv() ? (
+        {!cloudinaryReady ? (
           <p className="text-xs text-amber-400">
-            Configura Cloudinary para cambiar la foto.
+            Configura Cloudinary en las variables de entorno para cambiar la
+            foto.
           </p>
         ) : null}
         {photoUrl ? (
@@ -102,7 +105,7 @@ export function FooterForm({ footer }: { footer: FooterContent }) {
         <Input
           type="file"
           accept="image/*"
-          disabled={!hasCloudinaryEnv() || uploading}
+          disabled={!cloudinaryReady || uploading}
           onChange={(event) => handleUpload(event.target.files?.[0])}
           className="bg-white/5 border-white/10 text-white"
         />

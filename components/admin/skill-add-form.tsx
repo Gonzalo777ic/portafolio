@@ -13,8 +13,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAdminMedia } from "@/components/admin/admin-media-provider";
 import { findCatalogItem, TECH_CATALOG } from "@/lib/skill-catalog";
-import { hasCloudinaryEnv, uploadImageToCloudinary } from "@/lib/cloudinary";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import type { SkillCategory } from "@/lib/skill";
 
 const initialState: SkillFormState = { error: null, success: false };
@@ -40,6 +41,7 @@ export function SkillAddForm({ category }: { category: SkillCategory }) {
   const [customUrl, setCustomUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const { cloudinaryReady } = useAdminMedia();
 
   const catalogItem = findCatalogItem(catalogKey);
   const name = mode === "catalog" ? catalogItem?.name ?? "" : customName;
@@ -120,15 +122,16 @@ export function SkillAddForm({ category }: { category: SkillCategory }) {
           </div>
           <div className="space-y-2">
             <Label className="text-white">Logo</Label>
-            {!hasCloudinaryEnv() ? (
+            {!cloudinaryReady ? (
               <p className="text-xs text-amber-400">
-                Configura Cloudinary para subir un logo.
+                Configura Cloudinary en las variables de entorno para subir un
+                logo.
               </p>
             ) : null}
             <Input
               type="file"
               accept="image/*"
-              disabled={!hasCloudinaryEnv() || uploading}
+              disabled={!cloudinaryReady || uploading}
               onChange={(event) => handleUpload(event.target.files?.[0])}
               className="bg-white/5 border-white/10 text-white"
             />

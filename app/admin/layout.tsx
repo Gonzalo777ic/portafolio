@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { AdminHeader } from "@/components/admin/admin-header";
+import { AdminMediaProvider } from "@/components/admin/admin-media-provider";
 import { AdminNav } from "@/components/admin/admin-nav";
+import { hasCloudinaryEnv } from "@/lib/cloudinary";
 
 /** Siempre lee la BD: evita servir el admin vacío cacheado tras un seed SQL. */
 export const dynamic = "force-dynamic";
@@ -14,7 +16,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <AdminNav />
         </aside>
         <div className="min-w-0 flex-1 px-4 py-10 lg:px-10">
-          <div className="mx-auto max-w-3xl">{children}</div>
+          <div className="mx-auto max-w-3xl">
+            <AdminMediaProvider cloudinaryReady={hasCloudinaryEnv()}>
+              {children}
+            </AdminMediaProvider>
+          </div>
         </div>
       </div>
     </div>

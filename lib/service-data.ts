@@ -1,13 +1,13 @@
 import { hasDatabase, prisma } from "@/lib/prisma";
 import {
-  defaultServices,
   isServiceColor,
   isServiceIconName,
   type Service,
 } from "@/lib/service";
 
+/** Solo filas reales. Sin mocks hardcodeados. */
 export async function getServices(): Promise<Service[]> {
-  if (!hasDatabase()) return defaultServices;
+  if (!hasDatabase()) return [];
 
   try {
     const rows = await prisma.service.findMany({
@@ -23,6 +23,6 @@ export async function getServices(): Promise<Service[]> {
       sortOrder: row.sortOrder,
     }));
   } catch {
-    return defaultServices;
+    return [];
   }
 }

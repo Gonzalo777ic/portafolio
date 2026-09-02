@@ -1,8 +1,9 @@
 import { hasDatabase, prisma } from "@/lib/prisma";
-import { defaultAlbums, type Album } from "@/lib/album";
+import type { Album } from "@/lib/album";
 
+/** Solo filas reales. Sin mocks hardcodeados. */
 export async function getAlbums(): Promise<Album[]> {
-  if (!hasDatabase()) return defaultAlbums;
+  if (!hasDatabase()) return [];
 
   try {
     const rows = await prisma.album.findMany({
@@ -18,6 +19,6 @@ export async function getAlbums(): Promise<Album[]> {
       sortOrder: row.sortOrder,
     }));
   } catch {
-    return defaultAlbums;
+    return [];
   }
 }

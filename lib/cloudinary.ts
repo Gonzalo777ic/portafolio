@@ -13,7 +13,9 @@ export async function uploadImageToCloudinary(
   const preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
   if (!cloud || !preset) {
-    throw new Error("Faltan las variables de Cloudinary en .env.local.");
+    throw new Error(
+      "Faltan NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME o NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET en las variables de entorno."
+    );
   }
 
   const body = new FormData();

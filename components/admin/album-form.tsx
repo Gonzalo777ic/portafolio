@@ -7,10 +7,11 @@ import {
   updateAlbum,
   type AlbumFormState,
 } from "@/app/actions/album";
+import { useAdminMedia } from "@/components/admin/admin-media-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { hasCloudinaryEnv, uploadImageToCloudinary } from "@/lib/cloudinary";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { albumCoverSrc, type Album } from "@/lib/album";
 
 const initialState: AlbumFormState = { error: null, success: false };
@@ -34,6 +35,7 @@ export function AlbumForm({ album }: { album?: Album }) {
   const [imageUrl, setImageUrl] = useState(album?.imageUrl ?? "");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const { cloudinaryReady } = useAdminMedia();
 
   async function handleUpload(file: File | undefined) {
     if (!file) return;
@@ -96,9 +98,10 @@ export function AlbumForm({ album }: { album?: Album }) {
       </div>
       <div className="space-y-2">
         <Label className="text-white">Portada (Cloudinary)</Label>
-        {!hasCloudinaryEnv() ? (
+        {!cloudinaryReady ? (
           <p className="text-xs text-amber-400">
-            Configura Cloudinary para subir la imagen.
+            Configura Cloudinary en las variables de entorno para subir la
+            imagen.
           </p>
         ) : null}
         {imageUrl ? (
@@ -112,7 +115,7 @@ export function AlbumForm({ album }: { album?: Album }) {
         <Input
           type="file"
           accept="image/*"
-          disabled={!hasCloudinaryEnv() || uploading}
+          disabled={!cloudinaryReady || uploading}
           onChange={(event) => handleUpload(event.target.files?.[0])}
           className="bg-white/5 border-white/10 text-white"
         />
