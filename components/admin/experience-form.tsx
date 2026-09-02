@@ -52,7 +52,18 @@ export function ExperienceForm({ item }: { item?: Experience }) {
   const [previewUrl, setPreviewUrl] = useState(item?.imageUrl ?? "");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [fileInputKey, setFileInputKey] = useState(0);
   const { cloudinaryReady } = useAdminMedia();
+
+  function clearImage() {
+    if (previewUrl.startsWith("blob:")) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setImageUrl("");
+    setPreviewUrl("");
+    setUploadError(null);
+    setFileInputKey((key) => key + 1);
+  }
 
   async function handleUpload(file: File | undefined) {
     if (!file) return;
@@ -200,7 +211,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
             imagen.
           </p>
         ) : null}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           {previewUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -211,13 +222,27 @@ export function ExperienceForm({ item }: { item?: Experience }) {
           ) : (
             <div className="size-16 rounded-xl border border-dashed border-white/15 bg-white/5" />
           )}
-          <Input
-            type="file"
-            accept="image/*"
-            disabled={!cloudinaryReady || uploading}
-            onChange={(event) => handleUpload(event.target.files?.[0])}
-            className="h-11 border-white/10 bg-white/5 text-white file:text-white"
-          />
+          <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center">
+            <Input
+              key={fileInputKey}
+              type="file"
+              accept="image/*"
+              disabled={!cloudinaryReady || uploading}
+              onChange={(event) => handleUpload(event.target.files?.[0])}
+              className="h-11 border-white/10 bg-white/5 text-white file:text-white"
+            />
+            {previewUrl || imageUrl ? (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={clearImage}
+                disabled={uploading}
+                className="shrink-0 text-neutral-400 hover:text-red-300"
+              >
+                Quitar imagen
+              </Button>
+            ) : null}
+          </div>
         </div>
         {uploading ? (
           <p className="text-xs text-neutral-400">Subiendo…</p>
