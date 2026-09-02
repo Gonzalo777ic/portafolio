@@ -5,9 +5,7 @@ import { motion, useMotionValue, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { X, ZoomIn } from "lucide-react"
 
-const images = ["/static/1.jpeg", "/static/2.jpeg", "/static/3.jpeg", "/static/5.png"]
-
-export function RotatingCube() {
+export function RotatingCube({ images }: { images: string[] }) {
   const [isHovered, setIsHovered] = useState(false)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [cubeSize, setCubeSize] = useState(480) // Tamaño por defecto

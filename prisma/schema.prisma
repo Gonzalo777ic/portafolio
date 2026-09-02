@@ -1,0 +1,211 @@
+// Content models for Gonzalo's portfolio. Auth remains in Supabase.
+// Apply schema: DATABASE_URL in .env.local, then `pnpm db:push`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Showcase {
+  id          Int       @id
+  title       String
+  titleAccent String    @default("") @map("title_accent")
+  subtitle    String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  @@map("showcase")
+}
+
+model About {
+  id               Int       @id
+  label            String
+  title            String
+  titleAccent      String    @default("") @map("title_accent")
+  body             String
+  imageUrls        String[]  @default([]) @map("image_urls")
+  pageTitle        String?   @map("page_title")
+  pageTitleAccent  String    @default("") @map("page_title_accent")
+  pageBody         String?   @map("page_body")
+  carouselCaption  String    @default("") @map("carousel_caption")
+  roleTags         String[]  @default([]) @map("role_tags")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  deletedAt        DateTime? @map("deleted_at")
+
+  @@map("about")
+}
+
+model SocialLink {
+  id        String    @id @default(uuid()) @db.Uuid
+  label     String
+  href      String
+  handle    String    @default("")
+  icon      String    @default("globe")
+  sortOrder Int       @default(0) @map("sort_order")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("social_links")
+}
+
+model Service {
+  id          String    @id @default(uuid()) @db.Uuid
+  title       String
+  description String
+  icon        String    @default("code")
+  iconColor   String    @default("cyan") @map("icon_color")
+  sortOrder   Int       @default(0) @map("sort_order")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  @@map("services")
+}
+
+model Skill {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  category  String
+  iconUrl   String    @map("icon_url")
+  iconKey   String    @default("custom") @map("icon_key")
+  sortOrder Int       @default(0) @map("sort_order")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("skills")
+}
+
+model Project {
+  id             String    @id @default(uuid()) @db.Uuid
+  title          String
+  description    String
+  features       String[]  @default([])
+  tags           String[]  @default([])
+  imageUrls      String[]  @default([]) @map("image_urls")
+  github         String    @default("")
+  githubBackend  String    @default("") @map("github_backend")
+  demo           String    @default("")
+  featured       Boolean   @default(false)
+  sortOrder      Int       @default(0) @map("sort_order")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at")
+
+  @@map("projects")
+}
+
+model ProjectsPage {
+  id        Int       @id
+  kicker    String
+  title     String
+  subtitle  String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("projects_page")
+}
+
+model MarqueeWord {
+  id        String    @id @default(uuid()) @db.Uuid
+  label     String
+  rowIndex  Int       @map("row_index")
+  sortOrder Int       @default(0) @map("sort_order")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("marquee_words")
+}
+
+model Album {
+  id        String    @id @default(uuid()) @db.Uuid
+  title     String
+  artist    String
+  albumUrl  String    @map("album_url")
+  imageUrl  String    @map("image_url")
+  sortOrder Int       @default(0) @map("sort_order")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("albums")
+}
+
+model Footer {
+  id             Int       @id
+  bio            String
+  photoUrl       String    @map("photo_url")
+  copyrightText  String    @map("copyright_text")
+  badgeText      String    @default("") @map("badge_text")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at")
+
+  @@map("footer")
+}
+
+model AcademicLabel {
+  id        String           @id @default(uuid()) @db.Uuid
+  parentId  String?          @map("parent_id") @db.Uuid
+  parent    AcademicLabel?   @relation("AcademicTree", fields: [parentId], references: [id])
+  children  AcademicLabel[]  @relation("AcademicTree")
+  label     String
+  sortOrder Int              @default(0) @map("sort_order")
+  createdAt DateTime         @default(now()) @map("created_at")
+  updatedAt DateTime         @updatedAt @map("updated_at")
+  deletedAt DateTime?        @map("deleted_at")
+
+  @@map("academic_labels")
+}
+
+model LearningSection {
+  id        Int       @id
+  title     String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("learning_section")
+}
+
+model LearningTopic {
+  id          String    @id @default(uuid()) @db.Uuid
+  title       String
+  description String
+  icon        String    @default("brain")
+  iconColor   String    @default("violet") @map("icon_color")
+  sortOrder   Int       @default(0) @map("sort_order")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  @@map("learning_topics")
+}
+
+model Experience {
+  id         String    @id @default(uuid()) @db.Uuid
+  orgName    String    @map("org_name")
+  role       String
+  kind       String    @default("employment")
+  kindDetail String    @default("") @map("kind_detail")
+  startOn    DateTime  @map("start_on") @db.Date
+  endOn      DateTime? @map("end_on") @db.Date
+  isCurrent  Boolean   @default(false) @map("is_current")
+  summary    String    @default("")
+  imageUrl   String    @default("") @map("image_url")
+  sortOrder  Int       @default(0) @map("sort_order")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  deletedAt  DateTime? @map("deleted_at")
+
+  @@map("experience")
+}

@@ -10,6 +10,8 @@ import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PlayerProvider } from "@/components/player-context"
 import { GlobalPlayer } from "@/components/global-player"
+import { getSocialLinks } from "@/lib/social-data"
+import { getFooterContent } from "@/lib/footer-data"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +31,15 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const [socials, footer] = await Promise.all([
+    getSocialLinks(),
+    getFooterContent(),
+  ])
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -59,7 +65,7 @@ export default function RootLayout({
               <main className="flex-grow">
                 {children}
               </main>
-              <Footer />
+              <Footer socials={socials} content={footer} />
             </div>
             
           </PlayerProvider>

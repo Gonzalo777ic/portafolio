@@ -1,0 +1,26 @@
+---
+description: Límite de líneas, orquestación y extracción de componentes
+alwaysApply: true
+---
+
+# MODULARIZACIÓN Y LÍMITE DE LÍNEAS
+
+- **Ideal:** 250–350 líneas por archivo.
+- **Máximo:** 550 líneas. Si un archivo supera ~500, extrae subcomponentes **antes** de seguir creciendo.
+- **Prohibido** dejar archivos de 600+ líneas.
+
+## Orquestación
+
+- `page.tsx` / layouts son **orquestadores**: composición, fetch de datos y slots. Sin JSX masivo ni lógica de UI densa.
+- Extrae bloques (hero, listas, formularios, galerías, filtros) a archivos en `components/` o `components/{feature}/`.
+- Un archivo = una responsabilidad. No mezclar fetch, formulario y galería en el mismo módulo si ya pasan de ~300 líneas.
+
+## Estructura preferida
+
+```
+app/{ruta}/page.tsx          → orquesta
+components/{feature}/        → UI del feature
+lib/{feature}.ts             → tipos, queries, mappers
+```
+
+No dupliques Navbar, Footer ni providers: viven en `app/layout.tsx`.

@@ -3,20 +3,17 @@
 import { useState } from "react";
 import Link from "next/link"; // <--- Importamos Link
 import { ArrowRight } from "lucide-react"; // <--- Importamos el icono
-import { projectsData, type Project } from "@/lib/projects-data";
+import { type Project } from "@/lib/projects-data";
 import { ProjectImageCard } from "./project-image-card";
 import { ProjectDetails } from "./project-details";
 
-export function CuratedWork() {
-  // 1. Filtrado
-  const featuredProjects = projectsData.filter((p) => p.featured);
+export function CuratedWork({ projects }: { projects: Project[] }) {
+  const featuredProjects = projects.filter((project) => project.featured);
+  const list = featuredProjects.length > 0 ? featuredProjects : projects;
+  const [activeId, setActiveId] = useState(list[0]?.id);
+  const activeProject = list.find((project) => project.id === activeId) ?? list[0];
 
-  // 2. Estado
-  const [activeProject, setActiveProject] = useState<Project>(
-    featuredProjects[0] || projectsData[0]
-  );
-
-  if (featuredProjects.length === 0) return null;
+  if (!activeProject) return null;
 
   return (
     <section className="w-full py-32 px-4 relative z-20 bg-black/50">
@@ -40,11 +37,11 @@ export function CuratedWork() {
           
           {/* Columna Izquierda: Scroll de Imágenes */}
           <div className="w-full lg:w-3/5 space-y-24">
-            {featuredProjects.map((project) => (
+            {list.map((project) => (
               <ProjectImageCard
                 key={project.id}
                 project={project}
-                onInView={() => setActiveProject(project)}
+                onInView={() => setActiveId(project.id)}
               />
             ))}
           </div>

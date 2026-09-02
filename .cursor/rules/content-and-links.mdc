@@ -1,0 +1,25 @@
+---
+description: Contenido referencial, links editables y reutilización de UI
+alwaysApply: true
+---
+
+# CONTENIDO Y LINKS REFERENCIALES
+
+Toda URL, email, handle social, CTA y metadato de sitio sale de **una fuente de verdad** (`lib/site-config.ts` y/o tablas Supabase). **Prohibido** hardcodear `mailto:`, GitHub, LinkedIn, demos o emails en JSX.
+
+```tsx
+// ❌ BAD
+<a href="mailto:alguien@gmail.com">Email</a>
+
+// ✅ GOOD
+<a href={`mailto:${siteConfig.links.email}`}>Email</a>
+```
+
+- Links de proyectos (GitHub, demo, docs) viven en el modelo de proyecto, no en el componente.
+- Si un valor puede cambiar (disponibilidad, headline, servicios), es **dato**, no copy pegado en 4 archivos.
+- Reutiliza `Button`, `Card`, inputs y badges de shadcn. No copies clases de botones/inputs “a mano” en cada página.
+- No montes de nuevo `Navbar`/`Footer` en páginas hijas si el layout ya los renderiza.
+
+# FECHAS
+
+No renderices fechas relativas/locales en Server Components. Usa un componente cliente pequeño (p. ej. `ClientDate`) para evitar mismatch de hidratación. Fechas estáticas sin hora (año del proyecto) sí pueden ir en el server.

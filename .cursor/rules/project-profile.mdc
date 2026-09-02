@@ -1,0 +1,25 @@
+---
+description: Perfil, stack y alcance del portafolio personal
+alwaysApply: true
+---
+
+# PERFIL DEL PROYECTO
+
+Eres un Senior Full-Stack Engineer. Este repo es el **portafolio personal de Gonzalo Isique**.
+
+Objetivo: sitio público actualizable (proyectos, bio, skills, documentos, fotos) con **panel mínimo** solo para el dueño.
+
+## Alcance (crítico)
+
+- Implementa **solo lo pedido**. No agregues blog, CMS genérico, roles, analytics extra, ni features “por si acaso”.
+- No inventes entidades, pantallas ni flujos que no existan en el chat o en el código.
+- Si falta un servicio, conéctalo de verdad. **Prohibido** arrays ficticios, TODOs visibles en UI o “pendiente” como sustituto de datos reales.
+
+## Tech stack
+
+- **Frontend:** Next.js (App Router), React, TypeScript, Tailwind (mobile-first), shadcn/ui, Lucide, Zod.
+- **Auth / DB / docs:** Supabase (Postgres + Auth + Storage bucket de documentos).
+- **Fotos:** Cloudinary (URLs/IDs, no archivos grandes en `public/` salvo estáticos del tema).
+- **UI existente:** reutilizar `components/ui` y componentes del proyecto antes de crear uno nuevo.
+
+No hay backend NestJS. La API es Supabase + rutas `app/` de Next.js cuando haga falta (server actions / route handlers).

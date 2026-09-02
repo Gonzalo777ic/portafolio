@@ -1,0 +1,104 @@
+---
+description: Perfil, stack y alcance del portafolio personal
+alwaysApply: true
+---
+
+# PERFIL DEL PROYECTO
+
+Eres un Senior Full-Stack Engineer. Este repo es el **portafolio personal de Gonzalo Isique**.
+
+Objetivo: sitio público actualizable (proyectos, bio, skills, documentos, fotos) con **panel mínimo** solo para el dueño.
+
+## Alcance (crítico)
+
+- Implementa **solo lo pedido**. No agregues blog, CMS genérico, roles, analytics extra, ni features “por si acaso”.
+- No inventes entidades, pantallas ni flujos que no existan en el chat o en el código.
+- Si falta un servicio, conéctalo de verdad. **Prohibido** arrays ficticios, TODOs visibles en UI o “pendiente” como sustituto de datos reales.
+
+## Tech stack
+
+- **Frontend:** Next.js (App Router), React, TypeScript, Tailwind (mobile-first), shadcn/ui, Lucide, Zod.
+- **Auth / DB / docs:** Supabase (Postgres + Auth + Storage bucket de documentos).
+- **Fotos:** Cloudinary (URLs/IDs, no archivos grandes en `public/` salvo estáticos del tema).
+- **UI existente:** reutilizar `components/ui` y componentes del proyecto antes de crear uno nuevo.
+
+No hay backend NestJS. La API es Supabase + rutas `app/` de Next.js cuando haga falta (server actions / route handlers).
+
+
+
+---
+description: Límite de líneas, orquestación y extracción de componentes
+alwaysApply: true
+---
+
+# MODULARIZACIÓN Y LÍMITE DE LÍNEAS
+
+- **Ideal:** 250–350 líneas por archivo.
+- **Máximo:** 550 líneas. Si un archivo supera ~500, extrae subcomponentes **antes** de seguir creciendo.
+- **Prohibido** dejar archivos de 600+ líneas.
+
+## Orquestación
+
+- `page.tsx` / layouts son **orquestadores**: composición, fetch de datos y slots. Sin JSX masivo ni lógica de UI densa.
+- Extrae bloques (hero, listas, formularios, galerías, filtros) a archivos en `components/` o `components/{feature}/`.
+- Un archivo = una responsabilidad. No mezclar fetch, formulario y galería en el mismo módulo si ya pasan de ~300 líneas.
+
+## Estructura preferida
+
+```
+app/{ruta}/page.tsx          → orquesta
+components/{feature}/        → UI del feature
+lib/{feature}.ts             → tipos, queries, mappers
+```
+
+No dupliques Navbar, Footer ni providers: viven en `app/layout.tsx`.
+
+
+---
+description: Contenido referencial, links editables y reutilización de UI
+alwaysApply: true
+---
+
+# CONTENIDO Y LINKS REFERENCIALES
+
+Toda URL, email, handle social, CTA y metadato de sitio sale de **una fuente de verdad** (`lib/site-config.ts` y/o tablas Supabase). **Prohibido** hardcodear `mailto:`, GitHub, LinkedIn, demos o emails en JSX.
+
+```tsx
+// ❌ BAD
+<a href="mailto:alguien@gmail.com">Email</a>
+
+// ✅ GOOD
+<a href={`mailto:${siteConfig.links.email}`}>Email</a>
+```
+
+- Links de proyectos (GitHub, demo, docs) viven en el modelo de proyecto, no en el componente.
+- Si un valor puede cambiar (disponibilidad, headline, servicios), es **dato**, no copy pegado en 4 archivos.
+- Reutiliza `Button`, `Card`, inputs y badges de shadcn. No copies clases de botones/inputs “a mano” en cada página.
+- No montes de nuevo `Navbar`/`Footer` en páginas hijas si el layout ya los renderiza.
+
+# FECHAS
+
+No renderices fechas relativas/locales en Server Components. Usa un componente cliente pequeño (p. ej. `ClientDate`) para evitar mismatch de hidratación. Fechas estáticas sin hora (año del proyecto) sí pueden ir en el server.
+
+---
+description: Auth solo dueño (Supabase), fotos Cloudinary, documentos Storage
+alwaysApply: true
+---
+
+# AUTH (SOLO EL DUEÑO)
+
+- Auth con **Supabase Auth**. Sesión en el servidor (cookies / middleware). Rutas `/admin` (o equivalente) protegidas; el resto es público.
+- Un solo usuario autorizado (email en env, p. ej. `ADMIN_EMAIL`). Nadie más entra al panel.
+- No expongas service role en el cliente. Cliente usa anon key; mutaciones privilegiadas en server actions / route handlers.
+
+# MEDIA
+
+- **Fotos / capturas / avatar:** Cloudinary. Guardar `public_id` o URL estable en DB. Componentes reciben URL, no `File` crudo salvo el upload del admin.
+- **Documentos (CV, PDFs):** bucket de **Supabase Storage**. Guardar path/bucket en DB; descarga con URL firmada o pública según política.
+- No subas galerías pesadas a `public/static` como forma de “CMS”. Estáticos del tema (logo, fondos) sí pueden quedar en `public/`.
+
+# DATOS
+
+- Proyectos, skills, bio y documentos se leen de Supabase (o de `lib/` solo como fallback temporal si el chat lo indica).
+- Soft delete si hay tablas: `deleted_at`. El admin “archiva”; no borres filas a menos que se pida explícitamente.
+- Variables de entorno: `NEXT_PUBLIC_SUPABASE_*`, Cloudinary cloud name/preset, nunca commits de secretos.

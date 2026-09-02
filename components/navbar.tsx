@@ -14,10 +14,13 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { siteConfig } from "@/lib/site-config";
+import { isChromeHidden } from "@/lib/routes";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  if (isChromeHidden(pathname)) return null;
 
   const links = [
     { href: "/", label: "Home" },

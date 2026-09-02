@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { usePlayer } from "./player-context";
-import { spotifyAlbums } from "@/lib/spotify-data";
+import { albumCoverSrc, type Album } from "@/lib/album";
 
-export function PersonalFavorites() {
+export function PersonalFavorites({ albums }: { albums: Album[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(1);
 
@@ -27,7 +27,7 @@ export function PersonalFavorites() {
   }, []);
 
   const nextSlide = () => {
-    if (currentIndex < spotifyAlbums.length - itemsPerPage) {
+    if (currentIndex < albums.length - itemsPerPage) {
       setCurrentIndex((prev) => prev + 1);
     }
   };
@@ -37,6 +37,8 @@ export function PersonalFavorites() {
       setCurrentIndex((prev) => prev - 1);
     }
   };
+
+  if (albums.length === 0) return null;
 
   return (
     <section className="w-full py-32 px-4 relative z-20 bg-neutral-950">
@@ -69,7 +71,7 @@ export function PersonalFavorites() {
           )}
 
           {/* Botón Derecha (Solo visible si hay más items) */}
-          {currentIndex < spotifyAlbums.length - itemsPerPage && (
+          {currentIndex < albums.length - itemsPerPage && (
             <button
               onClick={nextSlide}
               className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md border border-white/10 transition-all -mr-4 md:-mr-12 hover:scale-110"
@@ -86,15 +88,14 @@ export function PersonalFavorites() {
               animate={{ x: `-${currentIndex * (100 / itemsPerPage)}%` }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
-              {spotifyAlbums.map((album, index) => (
+              {albums.map((album) => (
                 <div
-                  key={index}
-                  // En móvil ocupa 100%, en escritorio 1/3 (33.33%)
+                  key={album.id}
                   className="min-w-full md:min-w-[33.333%] px-3 flex-shrink-0"
                 >
                   <SpotifyCustomCard
                     albumUrl={album.albumUrl}
-                    imageUrl={album.imageUrl}
+                    imageUrl={albumCoverSrc(album.imageUrl)}
                     title={album.title}
                     artist={album.artist}
                   />

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Github, ExternalLink, X, ChevronLeft, ChevronRight } from "lucide-react";
-import { type Project } from "@/lib/projects-data";
+import { type Project, projectBackendHref, projectDemoHref } from "@/lib/projects-data";
 
 // --- MODAL DE IMÁGENES (Sin cambios) ---
 function ProjectModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
@@ -61,8 +61,9 @@ function ProjectModal({ project, onClose }: { project: Project | null; onClose: 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const githubBackend = projectBackendHref(project);
+  const demoHref = projectDemoHref(project);
 
-  // 1. DETECCIÓN: ¿Tiene imágenes?
   const hasImages = project.images && project.images.length > 0;
   const thumbnail = hasImages ? project.images[0] : null;
 
@@ -121,18 +122,30 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
                     <Github size={20} />
                   </a>
                 )}
-                {project.demo && (
+                {githubBackend ? (
                   <a
-                    href={project.demo}
+                    href={githubBackend}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg border border-transparent hover:border-white/10"
                     onClick={(e) => e.stopPropagation()}
-                    title="Ver Demo en Vivo"
+                    title="Código backend"
+                  >
+                    <Github size={20} />
+                  </a>
+                ) : null}
+                {demoHref ? (
+                  <a
+                    href={demoHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg border border-transparent hover:border-white/10"
+                    onClick={(e) => e.stopPropagation()}
+                    title="Ver demo"
                   >
                     <ExternalLink size={20} />
                   </a>
-                )}
+                ) : null}
               </div>
             </div>
 

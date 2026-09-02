@@ -1,0 +1,22 @@
+---
+description: Auth solo dueño (Supabase), fotos Cloudinary, documentos Storage
+alwaysApply: true
+---
+
+# AUTH (SOLO EL DUEÑO)
+
+- Auth con **Supabase Auth**. Sesión en el servidor (cookies / middleware). Rutas `/admin` (o equivalente) protegidas; el resto es público.
+- Un solo usuario autorizado (email en env, p. ej. `ADMIN_EMAIL`). Nadie más entra al panel.
+- No expongas service role en el cliente. Cliente usa anon key; mutaciones privilegiadas en server actions / route handlers.
+
+# MEDIA
+
+- **Fotos / capturas / avatar:** Cloudinary. Guardar `public_id` o URL estable en DB. Componentes reciben URL, no `File` crudo salvo el upload del admin.
+- **Documentos (CV, PDFs):** bucket de **Supabase Storage**. Guardar path/bucket en DB; descarga con URL firmada o pública según política.
+- No subas galerías pesadas a `public/static` como forma de “CMS”. Estáticos del tema (logo, fondos) sí pueden quedar en `public/`.
+
+# DATOS
+
+- Proyectos, skills, bio y documentos se leen de Supabase (o de `lib/` solo como fallback temporal si el chat lo indica).
+- Soft delete si hay tablas: `deleted_at`. El admin “archiva”; no borres filas a menos que se pida explícitamente.
+- Variables de entorno: `NEXT_PUBLIC_SUPABASE_*`, Cloudinary cloud name/preset, nunca commits de secretos.

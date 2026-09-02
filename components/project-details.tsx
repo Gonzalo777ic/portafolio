@@ -3,14 +3,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { type Project } from "@/lib/projects-data";
+import { type Project, projectDemoHref, projectViewHref } from "@/lib/projects-data";
 
 interface ProjectDetailsProps {
   activeProject: Project;
 }
 
 export function ProjectDetails({ activeProject }: ProjectDetailsProps) {
-  const projectLink = activeProject.demo || activeProject.github || "#";
+  const githubHref = projectViewHref(activeProject);
+  const demoHref = projectDemoHref(activeProject);
 
   return (
     <div className="relative p-8 rounded-3xl border border-white/5 bg-neutral-900/80 backdrop-blur-md shadow-2xl">
@@ -56,18 +57,33 @@ export function ProjectDetails({ activeProject }: ProjectDetailsProps) {
             ))}
           </div>
 
-          <div className="pt-8 flex items-center gap-4">
-            <Link
-              href={projectLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-white font-medium hover:text-[#9B53F9] transition-colors"
-            >
-              <span className="border-b border-transparent group-hover:border-[#9B53F9] transition-all">
-                Ver Detalles del Proyecto
-              </span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+          <div className="pt-8 flex flex-wrap items-center gap-4">
+            {githubHref ? (
+              <Link
+                href={githubHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 text-white font-medium hover:text-[#9B53F9] transition-colors"
+              >
+                <span className="border-b border-transparent group-hover:border-[#9B53F9] transition-all">
+                  Ver proyecto
+                </span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            ) : null}
+            {demoHref ? (
+              <Link
+                href={demoHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 text-neutral-300 font-medium hover:text-white transition-colors"
+              >
+                <span className="border-b border-transparent group-hover:border-white transition-all">
+                  Demo
+                </span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            ) : null}
           </div>
         </motion.div>
       </AnimatePresence>

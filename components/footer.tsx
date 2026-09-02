@@ -2,11 +2,27 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Github, Linkedin, Mail } from "lucide-react"; // Asumiendo que Twitter no se usa o lo agregas
-import { siteConfig } from "@/lib/site-config";
+import { usePathname } from "next/navigation";
+import { isChromeHidden } from "@/lib/routes";
+import type { SocialLink } from "@/lib/social";
+import { SocialIcon } from "@/components/social-icon";
+import type { FooterContent } from "@/lib/footer";
 
-export function Footer() {
+export function Footer({
+  socials,
+  content,
+}: {
+  socials: SocialLink[];
+  content: FooterContent;
+}) {
+  const pathname = usePathname();
+  if (isChromeHidden(pathname)) return null;
+
   const currentYear = new Date().getFullYear();
+  const badgeParts = (content.badgeText ?? "")
+    .split("|")
+    .map((part) => part.trim())
+    .filter(Boolean);
 
   return (
     <footer className="w-full bg-black border-t border-white/10 pt-20 pb-10 px-4 relative z-20">
@@ -26,9 +42,8 @@ export function Footer() {
                 />
               </div>
             </Link>
-            <p className="text-neutral-400 text-lg leading-relaxed max-w-sm mx-auto md:mx-0">
-              Soy Gonzalo, un desarrollador full-stack y solucionador de
-              problemas. ¡Gracias por visitar mi sitio!
+            <p className="text-neutral-400 text-lg leading-relaxed max-w-sm mx-auto md:mx-0 whitespace-pre-line">
+              {content.bio}
             </p>
           </div>
 
@@ -84,7 +99,7 @@ export function Footer() {
           <div className="md:col-span-3 flex justify-center md:justify-end items-start">
             <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-white/10 transition-all duration-500 hover:scale-105 shadow-2xl">
               <Image
-                src="/static/6.jpeg"
+                src={content.photoUrl}
                 alt="Gonzalo Isique"
                 fill
                 className="object-cover"
@@ -98,37 +113,43 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-6 md:gap-4">
           <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
             <p className="text-neutral-500 text-sm">
-              &copy; {currentYear} Gonzalo Isique. Todos los derechos
-              reservados.
+              &copy; {currentYear} {content.copyrightText}
             </p>
 
-            {/* Badge "Desarrollado en 24h" */}
-            <div className="hidden md:flex items-center gap-2 text-xs text-neutral-600 font-mono bg-neutral-900/50 px-3 py-1 rounded-full border border-white/5">
-              <span>⚡ Desarrollado en 24 horas</span>
-              <span className="text-neutral-700">|</span>
-              <span>Asistido por la IA</span>
-            </div>
-            {/* Badge versión Mobile (visible solo en mobile) */}
-            <div className="md:hidden flex items-center gap-2 text-[10px] text-neutral-600 font-mono bg-neutral-900/50 px-3 py-1 rounded-full border border-white/5 mt-2">
-              <span>⚡ Desarrollado en 24 horas</span>
-              <span className="text-neutral-700">|</span>
-              <span>Asistido por la IA</span>{" "}
-            </div>
+            {badgeParts.length > 0 ? (
+              <div className="hidden md:flex items-center gap-2 text-xs text-neutral-600 font-mono bg-neutral-900/50 px-3 py-1 rounded-full border border-white/5">
+                {badgeParts.map((part, index) => (
+                  <span key={part}>
+                    {index > 0 ? (
+                      <span className="text-neutral-700 mx-1">|</span>
+                    ) : null}
+                    {index === 0 ? `⚡ ${part}` : part}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            {badgeParts.length > 0 ? (
+              <div className="md:hidden flex items-center gap-2 text-[10px] text-neutral-600 font-mono bg-neutral-900/50 px-3 py-1 rounded-full border border-white/5 mt-2">
+                {badgeParts.map((part, index) => (
+                  <span key={part}>
+                    {index > 0 ? (
+                      <span className="text-neutral-700 mx-1">|</span>
+                    ) : null}
+                    {index === 0 ? `⚡ ${part}` : part}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           <div className="flex gap-6">
-            <SocialLink
-              href={siteConfig.links.github}
-              icon={<Github size={20} />}
-            />
-            <SocialLink
-              href={siteConfig.links.linkedin}
-              icon={<Linkedin size={20} />}
-            />
-            <SocialLink
-              href={`mailto:${siteConfig.links.email}`}
-              icon={<Mail size={20} />}
-            />
+            {socials.map((social) => (
+              <SocialLink
+                key={social.id}
+                href={social.href}
+                icon={<SocialIcon name={social.icon} size={20} />}
+              />
+            ))}
           </div>
         </div>
       </div>

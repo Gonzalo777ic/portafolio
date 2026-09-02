@@ -12,6 +12,22 @@ export interface Project {
   githubBackend?: string;
   demo?: string;
   video?: string;
+  sortOrder?: number;
+}
+
+export function projectViewHref(project: Project) {
+  const github = project.github?.trim();
+  return github ? github : null;
+}
+
+export function projectDemoHref(project: Project) {
+  const demo = project.demo?.trim();
+  return demo ? demo : null;
+}
+
+export function projectBackendHref(project: Project) {
+  const href = project.githubBackend?.trim();
+  return href ? href : null;
 }
 
 export const projectsData: Project[] = [
