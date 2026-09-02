@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/require-admin";
-import { prisma } from "@/lib/prisma";
+import { formatPrismaError, prisma } from "@/lib/prisma";
 import { monthToDate } from "@/lib/experience";
 import { experienceIdSchema, experienceSchema } from "@/lib/experience-schema";
 
@@ -68,9 +68,9 @@ export async function createExperience(
         sortOrder: parsed.data.sortOrder,
       },
     });
-  } catch {
+  } catch (error) {
     return {
-      error: "No se pudo crear. Revisa Prisma y experience.",
+      error: `No se pudo crear la experiencia: ${formatPrismaError(error)}`,
       success: false,
     };
   }
@@ -116,8 +116,11 @@ export async function updateExperience(
         sortOrder: parsed.data.sortOrder,
       },
     });
-  } catch {
-    return { error: "No se pudo guardar la experiencia.", success: false };
+  } catch (error) {
+    return {
+      error: `No se pudo guardar la experiencia: ${formatPrismaError(error)}`,
+      success: false,
+    };
   }
 
   revalidateExperience();

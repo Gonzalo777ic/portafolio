@@ -11,7 +11,7 @@ const initialState: AuthState = { error: null };
 
 const queryErrors: Record<string, string> = {
   unauthorized: "Este usuario no tiene acceso al panel.",
-  missing_env: "Faltan las variables de Supabase en .env.local.",
+  missing_env: "Faltan las variables de Supabase en las variables de entorno.",
 };
 
 export function LoginForm() {

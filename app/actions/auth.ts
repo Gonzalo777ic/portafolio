@@ -20,7 +20,7 @@ export async function signIn(
   }
 
   if (!hasSupabaseEnv()) {
-    return { error: "Faltan las variables de Supabase en .env.local." };
+    return { error: "Faltan las variables de Supabase en las variables de entorno." };
   }
 
   const supabase = await createClient();

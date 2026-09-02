@@ -2,7 +2,6 @@
 
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
-import Image from "next/image";
 import {
   createExperience,
   updateExperience,
@@ -50,6 +49,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
   const [kind, setKind] = useState<ExperienceKind>(item?.kind ?? "employment");
   const [isCurrent, setIsCurrent] = useState(item?.isCurrent ?? false);
   const [imageUrl, setImageUrl] = useState(item?.imageUrl ?? "");
+  const [previewUrl, setPreviewUrl] = useState(item?.imageUrl ?? "");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const { cloudinaryReady } = useAdminMedia();
@@ -57,10 +57,14 @@ export function ExperienceForm({ item }: { item?: Experience }) {
   async function handleUpload(file: File | undefined) {
     if (!file) return;
     setUploadError(null);
+    const localPreview = URL.createObjectURL(file);
+    setPreviewUrl(localPreview);
     setUploading(true);
     try {
       const url = await uploadImageToCloudinary(file, "portafolio/experience");
       setImageUrl(url);
+      setPreviewUrl(url);
+      URL.revokeObjectURL(localPreview);
     } catch (error) {
       setUploadError(
         error instanceof Error ? error.message : "No se pudo subir la imagen."
@@ -137,7 +141,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
             type="month"
             required
             defaultValue={toMonthInput(item?.startOn)}
-            className="h-11 bg-white/5 border-white/10 text-white"
+            className="h-11 border-white/10 bg-white/5 text-white"
           />
         </div>
         <div className="space-y-2">
@@ -147,8 +151,12 @@ export function ExperienceForm({ item }: { item?: Experience }) {
             type="month"
             defaultValue={toMonthInput(item?.endOn)}
             disabled={isCurrent}
-            className="h-11 bg-white/5 border-white/10 text-white disabled:opacity-40"
+            required={!isCurrent}
+            className="h-11 border-white/10 bg-white/5 text-white disabled:opacity-40"
           />
+          <p className="text-xs text-neutral-500">
+            Obligatorio si no es trabajo actual.
+          </p>
         </div>
         <div className="space-y-2">
           <Label className="text-white">Orden</Label>
@@ -157,7 +165,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
             type="number"
             min={0}
             defaultValue={item?.sortOrder ?? 0}
-            className="h-11 bg-white/5 border-white/10 text-white"
+            className="h-11 border-white/10 bg-white/5 text-white"
           />
         </div>
       </div>
@@ -166,6 +174,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
         <input
           type="checkbox"
           name="isCurrent"
+          value="on"
           checked={isCurrent}
           onChange={(event) => setIsCurrent(event.target.checked)}
           className="size-4 rounded border-white/20 bg-white/5"
@@ -192,10 +201,13 @@ export function ExperienceForm({ item }: { item?: Experience }) {
           </p>
         ) : null}
         <div className="flex items-center gap-4">
-          {imageUrl ? (
-            <div className="relative size-16 overflow-hidden rounded-xl border border-white/10 bg-white/5">
-              <Image src={imageUrl} alt="" fill className="object-cover" />
-            </div>
+          {previewUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={previewUrl}
+              alt=""
+              className="size-16 rounded-xl border border-white/10 object-cover"
+            />
           ) : (
             <div className="size-16 rounded-xl border border-dashed border-white/15 bg-white/5" />
           )}
@@ -204,7 +216,7 @@ export function ExperienceForm({ item }: { item?: Experience }) {
             accept="image/*"
             disabled={!cloudinaryReady || uploading}
             onChange={(event) => handleUpload(event.target.files?.[0])}
-            className="h-11 bg-white/5 border-white/10 text-white file:text-white"
+            className="h-11 border-white/10 bg-white/5 text-white file:text-white"
           />
         </div>
         {uploading ? (

@@ -1,16 +1,31 @@
+import { stripEnv } from "@/lib/env";
+
 export function hasCloudinaryEnv() {
   return Boolean(
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME &&
-      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+    stripEnv(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) &&
+      stripEnv(process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET)
   );
+}
+
+function friendlyCloudinaryError(message: string) {
+  if (/whitelisted for unsigned uploads/i.test(message)) {
+    return (
+      "El upload preset de Cloudinary no admite subidas unsigned. " +
+      "En Cloudinary → Settings → Upload → Upload presets, edita el preset " +
+      `(${stripEnv(process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET) ?? "tu preset"}) ` +
+      "y pon Signing mode en Unsigned, o crea uno nuevo unsigned y actualiza " +
+      "NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET en las variables de entorno."
+    );
+  }
+  return message;
 }
 
 export async function uploadImageToCloudinary(
   file: File,
   folder = "portafolio/about"
 ) {
-  const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const cloud = stripEnv(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+  const preset = stripEnv(process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
 
   if (!cloud || !preset) {
     throw new Error(
@@ -34,7 +49,11 @@ export async function uploadImageToCloudinary(
   };
 
   if (!response.ok || !json.secure_url) {
-    throw new Error(json.error?.message ?? "No se pudo subir la imagen.");
+    throw new Error(
+      friendlyCloudinaryError(
+        json.error?.message ?? "No se pudo subir la imagen."
+      )
+    );
   }
 
   return json.secure_url;

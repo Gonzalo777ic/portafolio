@@ -5,14 +5,14 @@ import { createClient } from "@/lib/supabase/server";
 export async function requireAdmin() {
   if (!hasSupabaseEnv()) {
     return {
-      error: "Faltan las variables de Supabase en .env.local.",
+      error: "Faltan las variables de Supabase en las variables de entorno.",
       ok: false as const,
     };
   }
 
   if (!hasDatabase()) {
     return {
-      error: "Falta DATABASE_URL en .env.local (conexión de Prisma a Postgres).",
+      error: "Falta DATABASE_URL en las variables de entorno (Prisma → Postgres).",
       ok: false as const,
     };
   }
